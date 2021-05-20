@@ -2,11 +2,31 @@ import * as d3 from 'd3';
 import { useD3 } from '../d3/d3file';
 import React from 'react';
 
-const BarChart = ({ data }) =>{
+const BarChart = ({ data , isClicked}) =>{
+  const randomSales = (data = []) => {
+      //36 years
+      console.log('data from BarChart: ', data);
+      let year = 1980;
+      let counter = 0;
+      while(counter < 36){
+        let curObj = {}
+        curObj["year"] = year + (counter * 5 )
+        curObj["efficiency"] = (Math.random()*(40-24)+24).toPrecision(3)
+        curObj["sales"] = Math.floor(Math.random()*(120-45)+45)*10000
+        data.push(curObj)
+        counter++;
+      }
+      return;
+  }
+  
+  if(!data || isClicked) {
+    data = [];
+    randomSales(data);
+  }
     const ref = useD3(
       (svg) => {
-        const height = 500;
-        const width = 500;
+        const height = 800;
+        const width = 600;
         const margin = { top: 20, right: 30, bottom: 30, left: 40 };
   
         const x = d3
@@ -63,8 +83,10 @@ const BarChart = ({ data }) =>{
           .attr("y", (d) => y1(d.sales))
           .attr("height", (d) => y1(0) - y1(d.sales));
       },
-      [data.length]
+      [data.length, isClicked]
     );
+
+
   
     return (
       <svg
