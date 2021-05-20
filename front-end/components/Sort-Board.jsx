@@ -24,9 +24,29 @@ const AlgoBoard = (props) => {
     let [data,setData] = useState([])
     let [isClicked,setClicked] = useState(false)
     
-    const renderBarChart = () => {
+    const bubbleSort = () => {
       
     }
+
+    const insertionSort = () => {
+      
+    }
+
+    const mergeSort = () => {
+      
+    }
+
+    const selectionSort = () => {
+      
+    }
+    const quickSort = () => {
+      
+    }
+
+    const heapSort = () => {
+      
+    }
+
       useEffect(()=> {
         console.log('component is mounted!')
         //  props.history.push('/sorting')
