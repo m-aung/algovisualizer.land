@@ -26,6 +26,10 @@
   - Exponential Search
   - Fibonacci Search
 - Sorting Algorithums
+  - Merge sort
+  - insertion sort
+  - bubble sort
+  - 
 - Computational Algorithums
 - Collection Algorithums
 ## Data Structures

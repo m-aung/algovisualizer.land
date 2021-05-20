@@ -37,7 +37,15 @@ const AlgoBoard = () => {
     // const [state,setState] = useState({d3 : ""})
     return (
         <div className="App">
+          <input type ='button' value = 'Bubble Sort'/>
+          <input type ='button' value = 'Insertion Sort'/>
+          <input type ='button' value = 'Merge Sort'/>
+          <input type ='button' value = 'Selection Sort'/>
+          <input type ='button' value = 'Quick Sort'/>
+          <input type ='button' value = 'Heap Sort'/>
             <BarChart data={data} />
+            <div className = 'algo'>
+            </div>
         </div>
       );
 }
