@@ -61,12 +61,12 @@ const AlgoBoard = (props) => {
 
     return (
         <div className="App">
-          <input type ='button' value = 'Bubble Sort'/>
-          <input type ='button' value = 'Insertion Sort'/>
-          <input type ='button' value = 'Merge Sort'/>
-          <input type ='button' value = 'Selection Sort'/>
-          <input type ='button' value = 'Quick Sort'/>
-          <input type ='button' value = 'Heap Sort'/>
+          <input type ='button' value = 'Bubble Sort' onClick = {()=>{bubbleSort()}}/>
+          <input type ='button' value = 'Insertion Sort' onClick = {()=>{insertionSort()}}/>
+          <input type ='button' value = 'Merge Sort' onClick = {()=>{mergeSort()}}/>
+          <input type ='button' value = 'Selection Sort' onClick = {()=>{selectionSort()}}/>
+          <input type ='button' value = 'Quick Sort' onClick = {()=>{quickSort()}}/>
+          <input type ='button' value = 'Heap Sort' onClick = {()=>{heapSort()}}/>
           {(!data && !isClicked) ? 
             <BarChart data={data} isClicked = {isClicked}/> : 
             <div id="noData"> 
