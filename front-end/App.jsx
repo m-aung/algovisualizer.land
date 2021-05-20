@@ -15,7 +15,7 @@ const App = () => {
     <div className="App">
       <div className="header">
         {/* <Navbar bg="dark" variant="dark"> */}
-        <NavLink exact activeClassName ='active' to ='/'>Home</NavLink>
+        <NavLink exact activeClassName ='active' className="navbar-toggler" to ='/'>Home</NavLink>
         <NavLink activeClassName='active' to = {{pathname :'https://github.com/m-aung/algovisualizer.land.git'} }target ="blank">github</NavLink>
         <NavLink exact activeClassName ='active' to ='/sorting'>Sorting-Game</NavLink>
         <NavLink exact activeClassName ='active' to ='/searching'>Searching-Game</NavLink>

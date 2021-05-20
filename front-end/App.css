@@ -12,6 +12,11 @@ body {
     background: #edf2f4;
     border-bottom: 1px solid #9999;
   }
+  .title{
+    color: darkcyan;
+    text-decoration: none;
+    margin-top: 5px;
+  }
   .header a {
     color: #0072ff;
     text-decoration: none;
