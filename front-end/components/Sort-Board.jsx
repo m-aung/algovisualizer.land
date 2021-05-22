@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 
 import BarChart from './BarChart';
+// import { sort } from 'd3';
+import * as SORT from '../algorithms/sorts/SORTS'
 
 const AlgoBoard = (props) => {
     const randomSales = (data = []) => {
@@ -23,41 +25,81 @@ const AlgoBoard = (props) => {
     }
     let [data,setData] = useState([])
     let [isClicked,setClicked] = useState(false)
+    let [sortType, setSortType] = useState('')
     
-    const bubbleSort = () => {
-      
+    const bubbleSort = (arr) => {
+      setSortType('bubble');
+      SORT.bubbleSort(data,setGraph())
     }
 
     const insertionSort = () => {
-      
+      setSortType('insertion');
     }
 
     const mergeSort = () => {
-      
+      setSortType('merge');
     }
 
     const selectionSort = () => {
-      
+      setSortType('selection');
     }
     const quickSort = () => {
-      
+      setSortType('quick');
     }
 
     const heapSort = () => {
-      
+      setSortType('heap');
     }
 
-      useEffect(()=> {
-        console.log('component is mounted!')
-        //  props.history.push('/sorting')
+    // switch(algorithm){
+    //   case 'bubble':
+    //     SORT.bubbleSort(data,setGraph())
+    //     console.log(`${algorithm} sorting completed...`)
+    //     break;
+    //   case 'insertion':
+    //     SORT.insertionSort()
+    //     console.log(`${algorithm} sorting completed...`)
+    //     break; 
+    //   case 'merge':
+    //     SORT.mergeSort()
+    //     console.log(`${algorithm} sorting completed...`)
+    //     break;  
+    //   case 'selection':
+    //     SORT.selectionSort()
+    //     console.log(`${algorithm} sorting completed...`)
+    //     break;
+    //   case 'quick':
+    //     SORT.quickSort()
+    //     console.log(`${algorithm} sorting completed...`)
+    //     break; 
+    //   case 'heap':
+    //     SORT.heapSort()
+    //     console.log(`${algorithm} sorting completed...`)
+    //     break; 
+    //   default:
+    //     console.log('This is default');
+    //     break;
+    // }
+    const [currentState, setCurrentState] = useState(data);
+
+    // component did mounted!
+    useEffect(()=> {
+      console.log('component is mounted!')
+      //  props.history.push('/sorting')
     }, [])
-      useEffect(()=>{
-        console.log('data has changed!')
-      },[data])
-      useEffect(()=>{
-        console.log('isClicked has changed!')
-        return () => {setClicked(false)} // resetting the click cache
-      },[isClicked])
+    // when data state is updated
+    useEffect(()=>{
+      console.log('data has changed!')
+    },[data])
+    // when isClicked state is updated
+    useEffect(()=>{
+      console.log('isClicked has changed!')
+      return () => {setClicked(false)} // resetting the click cache
+    },[isClicked])
+    //when sortType state is updated
+    useEffect(()=>{
+      console.log(`Sort Type is changed to ${sortType.toUpperCase()}`)
+    },[sortType])
 
     return (
         <div className="App">
@@ -68,7 +110,7 @@ const AlgoBoard = (props) => {
           <input type ='button' value = 'Quick Sort' onClick = {()=>{quickSort()}}/>
           <input type ='button' value = 'Heap Sort' onClick = {()=>{heapSort()}}/>
           {(!data && !isClicked) ? 
-            <BarChart data={data} isClicked = {isClicked}/> : 
+            <BarChart data={data} isClicked = {isClicked} algorithm = {sortType} /> : 
             <div id="noData"> 
               Click on the <strong>New Random Data</strong> to begin
             </div>}

@@ -1,11 +1,13 @@
 import * as d3 from 'd3';
 import { useD3 } from '../d3/d3file';
-import React from 'react';
+import React ,{useState,useEffect}from 'react';
+import AlgoBoard from './Sort-board';
+// import * as SORT from '../algorithms/sorts/SORTS'
 
-const BarChart = ({ data , isClicked}) =>{
+const BarChart = ({ data , isClicked, algorithm}) =>{
   const randomSales = (data = []) => {
       //36 years
-      console.log('data from BarChart: ', data);
+      // console.log('data from BarChart: ', data);
       let year = 1980;
       let counter = 0;
       while(counter < 36){
@@ -23,6 +25,41 @@ const BarChart = ({ data , isClicked}) =>{
     data = [];
     randomSales(data);
   }
+  // switch(algorithm){
+  //   case 'bubble':
+  //     SORT.bubbleSort(data,setGraph())
+  //     console.log(`${algorithm} sorting completed...`)
+  //     break;
+  //   case 'insertion':
+  //     SORT.insertionSort()
+  //     console.log(`${algorithm} sorting completed...`)
+  //     break; 
+  //   case 'merge':
+  //     SORT.mergeSort()
+  //     console.log(`${algorithm} sorting completed...`)
+  //     break;  
+  //   case 'selection':
+  //     SORT.selectionSort()
+  //     console.log(`${algorithm} sorting completed...`)
+  //     break;
+  //   case 'quick':
+  //     SORT.quickSort()
+  //     console.log(`${algorithm} sorting completed...`)
+  //     break; 
+  //   case 'heap':
+  //     SORT.heapSort()
+  //     console.log(`${algorithm} sorting completed...`)
+  //     break; 
+  //   default:
+  //     console.log('This is default');
+  //     break;
+  // }
+  // const [graph, setGraph] = useState(data);
+  // const callback = setGraph();
+
+  useEffect(() => {
+    console.log('state updated!')
+  }, [graph])
     const ref = useD3(
       (svg) => {
         const height = 800;
