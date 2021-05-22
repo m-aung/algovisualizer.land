@@ -5,26 +5,29 @@ import AlgoBoard from './Sort-board';
 // import * as SORT from '../algorithms/sorts/SORTS'
 
 const BarChart = ({ data , isClicked, algorithm}) =>{
-  const randomSales = (data = []) => {
-      //36 years
-      // console.log('data from BarChart: ', data);
-      let year = 1980;
-      let counter = 0;
-      while(counter < 36){
-        let curObj = {}
-        curObj["year"] = year + (counter * 5 )
-        curObj["efficiency"] = (Math.random()*(40-24)+24).toPrecision(3)
-        curObj["sales"] = Math.floor(Math.random()*(120-45)+45)*10000
-        data.push(curObj)
-        counter++;
-      }
-      return;
+  // const randomSales = (data = []) => {
+  //     //36 years
+  //     // console.log('data from BarChart: ', data);
+  //     let year = 1980;
+  //     let counter = 0;
+  //     while(counter < 36){
+  //       let curObj = {}
+  //       curObj["year"] = year + (counter * 5 )
+  //       curObj["efficiency"] = (Math.random()*(40-24)+24).toPrecision(3)
+  //       curObj["sales"] = Math.floor(Math.random()*(120-45)+45)*10000
+  //       data.push(curObj)
+  //       counter++;
+  //     }
+  //     return;
+  // }
+  if(!data) {
+    return(<div>no data to display</div>)
   }
   
-  if(!data || isClicked) {
-    data = [];
-    randomSales(data);
-  }
+  // if(!data || isClicked) {
+  //   data = [];
+  //   randomSales(data);
+  // }
   // switch(algorithm){
   //   case 'bubble':
   //     SORT.bubbleSort(data,setGraph())
@@ -57,9 +60,9 @@ const BarChart = ({ data , isClicked, algorithm}) =>{
   // const [graph, setGraph] = useState(data);
   // const callback = setGraph();
 
-  useEffect(() => {
-    console.log('state updated!')
-  }, [graph])
+  // useEffect(() => {
+  //   console.log('state updated!')
+  // }, [graph])
     const ref = useD3(
       (svg) => {
         const height = 800;

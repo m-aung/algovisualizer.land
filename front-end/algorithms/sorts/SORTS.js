@@ -3,12 +3,12 @@ export const bubbleSort = (input, callback) => {
     console.log('Bubble sort triggered!', typeof callback, callback)
    // if input is not array return
   if(!Array.isArray(input)) return input;
-  const output = []
+//   const output = []
   // first loop
   for (let first = 0; first < input.length; first++){
   // second loop
     for(let second = first+1; second < input.length; second++){
-      if(input[first]["population"] > input[second]["population"]){
+      if(input[first]["sales"] > input[second]["sales"]){
         const temp = input[first];
         input[first] = input[second];
         // console.log(temp);
