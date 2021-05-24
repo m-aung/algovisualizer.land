@@ -20,9 +20,9 @@ const BarChart = ({ data , isClicked, algorithm}) =>{
   //     }
   //     return;
   // }
-  if(!data) {
-    return(<div>no data to display</div>)
-  }
+  // if(!data) {
+  //   return(<div>no data to display</div>)
+  // }
   
   // if(!data || isClicked) {
   //   data = [];
@@ -65,9 +65,9 @@ const BarChart = ({ data , isClicked, algorithm}) =>{
   // }, [graph])
     const ref = useD3(
       (svg) => {
-        const height = 800;
+        const height = 650;
         const width = 600;
-        const margin = { top: 20, right: 30, bottom: 30, left: 40 };
+        const margin = { top: 30, right: 30, bottom: 30, left: 40 };
   
         const x = d3
           .scaleBand()
@@ -132,7 +132,7 @@ const BarChart = ({ data , isClicked, algorithm}) =>{
       <svg
         ref={ref}
         style={{
-          height: 500,
+          height: 700,
           width: "100%",
           marginRight: "0px",
           marginLeft: "0px",
