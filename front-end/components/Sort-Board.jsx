@@ -11,7 +11,7 @@ const AlgoBoard = (props) => {
   let [sortTimes, setsortTimes] = useState(0)
   // const dataRef = useRef(data);
   let curData = [];
-  let displayComponent = <BarChart data={data} isClicked = {isClicked} algorithm = {sortTimes} /> 
+  let displayComponent = <BarChart data={data} isClicked = {isClicked} sortClicks = {sortTimes} /> 
   let noDataComponent = <div id="noData"> Click on the <strong>New Random Data</strong> to begin </div>;
   // let displayComponent = <div>data = {test}</div>
   // let [updateData, setUpdateData] = useState(0)
@@ -26,7 +26,7 @@ const AlgoBoard = (props) => {
         // arr = [];
         while(counter < 36){
           let curObj = {}
-          curObj["year"] = year + (counter * 5 )
+          curObj["id"] = counter
           curObj["efficiency"] = (Math.random()*(40-24)+24).toPrecision(3)
           curObj["sales"] = Math.floor(Math.random()*(99-2)+2)*10000
           arr.push(curObj)
@@ -85,7 +85,7 @@ const AlgoBoard = (props) => {
          input[first] = input[second];
          // console.log(temp);
          input[second] = temp;
-         setsortTimes(sortTimes+1)
+        //  setsortTimes(sortTimes+1)
         //  setData(input); // change the state
         // setData(randomSales());
         // setUpdateData(updateData+1)
@@ -95,6 +95,7 @@ const AlgoBoard = (props) => {
        }
       //  console.log('not changing the data')
       //  setData(input);
+      // setsortTimes(sortTimes+1)
       // setUpdateData(updateData+1)
      }
    }
@@ -172,17 +173,17 @@ const AlgoBoard = (props) => {
       else{
         console.log('doing nothing...')
       }
-    },[isClicked])
+    },[isClicked,sortTimes])
     
 
     // useEffect (()=> {
-    //   if(updateData > 0){
-    //     console.log('curData: ', curData)
-    //     // console.log('from updateData data: ', data);
+    //   if(sortTimes > 0){
+    //     // console.log('curData: ', curData)
+    //     console.log('from updateData data: ', data);
     //     // setData(curData);
     //     console.log('from update Effect')
     //   }
-    // },[updateData])
+    // },[sortTimes])
     
     /*
     notes: 
