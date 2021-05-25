@@ -137,7 +137,23 @@ const AlgoBoard = (props) => {
     
 
     const selectionSort = (input = []) => {
-      console.log('selection');
+      // find the minimum element and place it in the front using two pointers
+      // loop 1: from 0 -> input.length
+      for(let i = 0; i < input.length; i++){
+          // loop 2: from next element of first loop -> input.length
+          for(let j = i+1; j < input.length; j++){
+          let curElement = input[i] 
+          if (input[j]['sales'] < curElement['sales']) {
+              let smaller = input[j] 
+              // swap the smaller with current element
+              input[i] = smaller; 
+              input[j] = curElement;
+              setsortTimes(sortTimes+1)
+              setData(input)
+          }
+        }
+      }
+      return input
     }
     const quickSort = (input = []) => {
       console.log('quick');
