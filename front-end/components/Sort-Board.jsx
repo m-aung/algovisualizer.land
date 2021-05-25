@@ -70,7 +70,7 @@ const AlgoBoard = (props) => {
 }
 
     const insertionSort = (input = []) => {
-      console.log('insertion');
+      // starting from second element and insert to the previous index if the current element is lower than previous element
       // Edge case
       if(!Array.isArray(input)) return input;
       // first loop from second element to last element
@@ -78,19 +78,28 @@ const AlgoBoard = (props) => {
         let curElement = input[curIndex]['sales']; // current Element
         let prevIndex= curIndex - 1; // previous Index
         // second loop (insertion loop)
+       /* Move elements of input[0..curIndex-1], that are 
+        greater than curElement, to one position ahead 
+        of their current position */
         while(prevIndex >= 0 && input[prevIndex]['sales'] > curElement){ // second loop condition previous element is greater than current
-          input[prevIndex+1]['sales'] = input[prevIndex]['sales']; // 
-          prevIndex = prevIndex -1;
+          input[ prevIndex+1 ]['sales'] = input[prevIndex]['sales']; // swap current element to the previous element 
+          prevIndex = prevIndex -1; // reduce the index of previous by one
           // setsortTimes(sortTimes+1)
         }
-        input[prevIndex+1]['sales'] = curElement;
+        input[prevIndex+1]['sales'] = curElement; // swaping the previous Index to current element
       }
       setsortTimes(sortTimes+1)
       return
     }
 
     const mergeSort = (input = []) => {
-      console.log('merge');
+      // divide and conquer method
+      // divide the array into arrays with one element
+      
+      //left and right array
+      let 
+
+
     }
 
     const selectionSort = (input = []) => {
