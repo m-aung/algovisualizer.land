@@ -4,7 +4,7 @@ import React ,{useState,useEffect}from 'react';
 import AlgoBoard from './Sort-board';
 // import * as SORT from '../algorithms/sorts/SORTS'
 
-const BarChart = ({ data , isClicked, sortClicks}) =>{
+const BarChart = ({ data , randomClicks, sortClicks}) =>{
     const ref = useD3(
       (svg) => {
         const height = 650;
@@ -67,11 +67,12 @@ const BarChart = ({ data , isClicked, sortClicks}) =>{
           .attr("y", (d) => y1(d.sales))
           .attr("height", (d) => y1(0) - y1(d.sales));
       },
-      [data.length, isClicked, sortClicks]
+      [data.length, randomClicks, sortClicks]
       // [data]
     );
 
-
+    console.log('randomClicks: ', randomClicks)
+    console.log('sortClicks: ', sortClicks)
   
     return (
       <svg
