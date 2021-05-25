@@ -92,15 +92,49 @@ const AlgoBoard = (props) => {
       return
     }
 
+    //helper function for merge
+    const merge = (arr1,arr2)=> {
+      const output = []
+      // loop 1: arr1 and arr2 both have lengths
+      while(arr1.length && arr2.length){
+        // if first element of arr 1 is less than that of arr 2, push it into output and shift it out
+        // else that of arr 2 into output and slice it(arr2[0]) shift out
+        (arr1[0]["sales"] <= arr2[0]["sales"])? output.push(arr1.shift()): output.push(arr2.shift())
+        setData(output)
+      }
+      // loop 2: for the remaining elements of arr1
+      while(arr1.length){
+        // push each element of arr1 into output and shift it out
+        output.push(arr1.shift())
+        setData(output)
+      }
+      while(arr2.length){
+        // push each element of arr2 into output and shift it out
+        output.push(arr2.shift())
+        setData(output)
+      }
+      setsortTimes(sortTimes+1)
+      setData(output)
+      return output
+    }
+
     const mergeSort = (input = []) => {
       // divide and conquer method
       // divide the array into arrays with one element
-      
-      //left and right array
-      let 
 
+      // edge case
+      if(!Array.isArray(input)) return 
+      // when array has less than 2 elements
+      if(input.length < 2) return input
 
+      // middle index, left and right arrays
+      const midIndex = Math.floor(input.length/2)
+      const left = input.slice(0, midIndex), right = input.slice(midIndex, input.length)
+      setsortTimes(sortTimes+1)
+      return merge(mergeSort(left),mergeSort(right))
     }
+      
+    
 
     const selectionSort = (input = []) => {
       console.log('selection');
@@ -146,10 +180,10 @@ const AlgoBoard = (props) => {
         <div className="App">
           <input type ='button' value = 'Bubble Sort' onClick = {()=>{bubbleSort(data)}}/>
           <input type ='button' value = 'Insertion Sort' onClick = {()=>{insertionSort(data)}}/>
-          <input type ='button' value = 'Merge Sort' onClick = {()=>{mergeSort()}}/>
-          <input type ='button' value = 'Selection Sort' onClick = {()=>{selectionSort()}}/>
-          <input type ='button' value = 'Quick Sort' onClick = {()=>{quickSort()}}/>
-          <input type ='button' value = 'Heap Sort' onClick = {()=>{heapSort()}}/>
+          <input type ='button' value = 'Merge Sort' onClick = {()=>{mergeSort(data)}}/>
+          <input type ='button' value = 'Selection Sort' onClick = {()=>{selectionSort(data)}}/>
+          <input type ='button' value = 'Quick Sort' onClick = {()=>{quickSort(data)}}/>
+          <input type ='button' value = 'Heap Sort' onClick = {()=>{heapSort(data)}}/>
           {(randomClicks > 0) ? 
             displayComponent : 
             noDataComponent}
