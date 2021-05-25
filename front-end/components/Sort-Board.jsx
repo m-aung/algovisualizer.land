@@ -70,7 +70,7 @@ const AlgoBoard = (props) => {
 }
 
     const insertionSort = (input = []) => {
-      console.log('insertion');
+      // starting from second element and insert to the previous index if the current element is lower than previous element
       // Edge case
       if(!Array.isArray(input)) return input;
       // first loop from second element to last element
@@ -78,20 +78,63 @@ const AlgoBoard = (props) => {
         let curElement = input[curIndex]['sales']; // current Element
         let prevIndex= curIndex - 1; // previous Index
         // second loop (insertion loop)
+       /* Move elements of input[0..curIndex-1], that are 
+        greater than curElement, to one position ahead 
+        of their current position */
         while(prevIndex >= 0 && input[prevIndex]['sales'] > curElement){ // second loop condition previous element is greater than current
-          input[prevIndex+1]['sales'] = input[prevIndex]['sales']; // 
-          prevIndex = prevIndex -1;
+          input[ prevIndex+1 ]['sales'] = input[prevIndex]['sales']; // swap current element to the previous element 
+          prevIndex = prevIndex -1; // reduce the index of previous by one
           // setsortTimes(sortTimes+1)
         }
-        input[prevIndex+1]['sales'] = curElement;
+        input[prevIndex+1]['sales'] = curElement; // swaping the previous Index to current element
       }
       setsortTimes(sortTimes+1)
       return
     }
 
-    const mergeSort = (input = []) => {
-      console.log('merge');
+    //helper function for merge
+    const merge = (arr1,arr2)=> {
+      const output = []
+      // loop 1: arr1 and arr2 both have lengths
+      while(arr1.length && arr2.length){
+        // if first element of arr 1 is less than that of arr 2, push it into output and shift it out
+        // else that of arr 2 into output and slice it(arr2[0]) shift out
+        (arr1[0]["sales"] <= arr2[0]["sales"])? output.push(arr1.shift()): output.push(arr2.shift())
+        setData(output)
+      }
+      // loop 2: for the remaining elements of arr1
+      while(arr1.length){
+        // push each element of arr1 into output and shift it out
+        output.push(arr1.shift())
+        setData(output)
+      }
+      while(arr2.length){
+        // push each element of arr2 into output and shift it out
+        output.push(arr2.shift())
+        setData(output)
+      }
+      setsortTimes(sortTimes+1)
+      setData(output)
+      return output
     }
+
+    const mergeSort = (input = []) => {
+      // divide and conquer method
+      // divide the array into arrays with one element
+
+      // edge case
+      if(!Array.isArray(input)) return 
+      // when array has less than 2 elements
+      if(input.length < 2) return input
+
+      // middle index, left and right arrays
+      const midIndex = Math.floor(input.length/2)
+      const left = input.slice(0, midIndex), right = input.slice(midIndex, input.length)
+      setsortTimes(sortTimes+1)
+      return merge(mergeSort(left),mergeSort(right))
+    }
+      
+    
 
     const selectionSort = (input = []) => {
       console.log('selection');
@@ -137,10 +180,10 @@ const AlgoBoard = (props) => {
         <div className="App">
           <input type ='button' value = 'Bubble Sort' onClick = {()=>{bubbleSort(data)}}/>
           <input type ='button' value = 'Insertion Sort' onClick = {()=>{insertionSort(data)}}/>
-          <input type ='button' value = 'Merge Sort' onClick = {()=>{mergeSort()}}/>
-          <input type ='button' value = 'Selection Sort' onClick = {()=>{selectionSort()}}/>
-          <input type ='button' value = 'Quick Sort' onClick = {()=>{quickSort()}}/>
-          <input type ='button' value = 'Heap Sort' onClick = {()=>{heapSort()}}/>
+          <input type ='button' value = 'Merge Sort' onClick = {()=>{mergeSort(data)}}/>
+          <input type ='button' value = 'Selection Sort' onClick = {()=>{selectionSort(data)}}/>
+          <input type ='button' value = 'Quick Sort' onClick = {()=>{quickSort(data)}}/>
+          <input type ='button' value = 'Heap Sort' onClick = {()=>{heapSort(data)}}/>
           {(randomClicks > 0) ? 
             displayComponent : 
             noDataComponent}
