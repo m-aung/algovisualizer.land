@@ -134,8 +134,6 @@ const AlgoBoard = (props) => {
       return merge(mergeSort(left),mergeSort(right))
     }
       
-    
-
     const selectionSort = (input = []) => {
       // find the minimum element and place it in the front using two pointers
       // loop 1: from 0 -> input.length
@@ -156,25 +154,52 @@ const AlgoBoard = (props) => {
       return input
     }
     const quickSort = (input = []) => {
-      console.log('quick');
+      // use partition algorithm
+      const swaper = (arr, leftIndex, rightIndex) => {
+        // swaper function
+        let temp = arr[leftIndex];
+        arr[leftIndex] = arr[rightIndex];
+        arr[rightIndex] = temp;
+     };
+     const partition = (arr, left, right) => {
+       // creating pivot point
+        let pivot = arr[Math.floor((right + left) / 2)]['sales'];
+        while (left<= right) {
+           while (arr[left]['sales'] < pivot) {
+              left++;
+           };
+           while (arr[right]['sales'] > pivot) {
+              right--;
+           };
+           if (left <= right) {
+              swaper(arr, left, right); //sawpping two elements
+              left++;
+              right--;
+           };
+        };
+        return left;
+     }
+     const sorter = (arr, left = 0, right = arr.length - 1) => {
+        // let index;
+        if (arr.length > 1) {
+           let index = partition(arr, left, right);
+           if (left < index - 1) {
+              sorter(arr, left, index - 1);
+           };
+           if (index < right) {
+              sorter(arr, index, right);
+           };
+        }
+        setData(arr)
+        setsortTimes(sortTimes+1)
+        return arr;
+     }
+     return sorter(input)
     }
 
     const heapSort = (input = []) => {
       console.log('heap');
     }
-
-    
-
-    // component did mounted!
-    // useEffect(()=> {
-    //   console.log('component is mounted!')
-    //   //  props.history.push('/sorting')
-    //   // console.log('Current data from component mounted: ',curData)
-    //   setData([]) // set data to empty array 
-    //   setData(randomSales())
-    // }, [])
-
-
     // when randomClicks state is updated
     useEffect(()=>{
       setData(randomSales())
@@ -187,6 +212,7 @@ const AlgoBoard = (props) => {
     barChart component is not finalized yet. should not display the component when parent component was mounted.√
     figure out how to stop running random state, sortType state and data state not to run when the component was mounted. x
     add new something to handle the after sorted effect.
+    add time consuming tracker
     */
    /*
    before changning the DOM
