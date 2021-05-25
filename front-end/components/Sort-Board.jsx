@@ -155,6 +155,46 @@ const AlgoBoard = (props) => {
     }
     const quickSort = (input = []) => {
       // use partition algorithm
+      const swaper = (arr, leftIndex, rightIndex) => {
+        // swaper function
+        let temp = arr[leftIndex];
+        arr[leftIndex] = arr[rightIndex];
+        arr[rightIndex] = temp;
+     };
+     const partition = (arr, left, right) => {
+       // creating pivot point
+        let pivot = arr[Math.floor((right + left) / 2)]['sales'];
+        while (left<= right) {
+           while (arr[left]['sales'] < pivot) {
+              left++;
+           };
+           while (arr[right]['sales'] > pivot) {
+              right--;
+           };
+           if (left <= right) {
+              swaper(arr, left, right); //sawpping two elements
+              left++;
+              right--;
+           };
+        };
+        return left;
+     }
+     const sorter = (arr, left = 0, right = arr.length - 1) => {
+        // let index;
+        if (arr.length > 1) {
+           let index = partition(arr, left, right);
+           if (left < index - 1) {
+              sorter(arr, left, index - 1);
+           };
+           if (index < right) {
+              sorter(arr, index, right);
+           };
+        }
+        setData(arr)
+        setsortTimes(sortTimes+1)
+        return arr;
+     }
+     return sorter(input)
     }
 
     const heapSort = (input = []) => {
