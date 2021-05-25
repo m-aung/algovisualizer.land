@@ -85,7 +85,7 @@ const AlgoBoard = (props) => {
          input[first] = input[second];
          // console.log(temp);
          input[second] = temp;
-        //  setsortTimes(sortTimes+1)
+         setsortTimes(sortTimes+1)
         //  setData(input); // change the state
         // setData(randomSales());
         // setUpdateData(updateData+1)
@@ -95,7 +95,6 @@ const AlgoBoard = (props) => {
        }
       //  console.log('not changing the data')
       //  setData(input);
-      // setsortTimes(sortTimes+1)
       // setUpdateData(updateData+1)
      }
    }
@@ -173,17 +172,17 @@ const AlgoBoard = (props) => {
       else{
         console.log('doing nothing...')
       }
-    },[isClicked,sortTimes])
+    },[isClicked])
     
 
     // useEffect (()=> {
-    //   if(sortTimes > 0){
-    //     // console.log('curData: ', curData)
-    //     console.log('from updateData data: ', data);
+    //   if(updateData > 0){
+    //     console.log('curData: ', curData)
+    //     // console.log('from updateData data: ', data);
     //     // setData(curData);
     //     console.log('from update Effect')
     //   }
-    // },[sortTimes])
+    // },[updateData])
     
     /*
     notes: 

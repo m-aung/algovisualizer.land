@@ -5,8 +5,6 @@ import AlgoBoard from './Sort-board';
 // import * as SORT from '../algorithms/sorts/SORTS'
 
 const BarChart = ({ data , isClicked, sortClicks}) =>{
-  console.log('data: ', data)
-  console.log('isClicked: ', isClicked)
     const ref = useD3(
       (svg) => {
         const height = 650;
@@ -17,7 +15,7 @@ const BarChart = ({ data , isClicked, sortClicks}) =>{
           .scaleBand()
           .domain(data.map((d) => d.id))
           .rangeRound([margin.left, width - margin.right])
-          .padding(0.3);
+          .padding(0.1);
   
         const y1 = d3
           .scaleLinear()
@@ -29,7 +27,6 @@ const BarChart = ({ data , isClicked, sortClicks}) =>{
             d3
               .axisBottom(x)
               /*
-              to divide into partition
               .tickValues(
                 d3
                   .ticks(...d3.extent(x.domain()), width / 40)
@@ -70,8 +67,8 @@ const BarChart = ({ data , isClicked, sortClicks}) =>{
           .attr("y", (d) => y1(d.sales))
           .attr("height", (d) => y1(0) - y1(d.sales));
       },
-      [data,isClicked, sortClicks]
-
+      [data.length, isClicked, sortClicks]
+      // [data]
     );
 
 
