@@ -47,17 +47,21 @@ const AlgoBoard = (props) => {
   return cloned
 }
     const bubbleSort = (input = []) => {
-      //Bubble sort
+    // Edge case
    if(!Array.isArray(input)) return input;
-   // first loop
+   // first loop from 0 to last element
    for (let first = 0; first < input.length; first++){
-   // second loop
+   // second loop from cur element of first loop to last element
      for(let second = first+1; second < input.length; second++){
-       if(input[first]["sales"] > input[second]["sales"]){
+       if(input[first]["sales"] > input[second]["sales"]){ // is the first element is greater than second
+         // create a variable the first element by value
          const temp = input[first];
+         // assign the first element to second one
          input[first] = input[second];
+         // assign the second element to variable
          input[second] = temp;
-         setsortTimes(sortTimes+1)
+         // increment the sort counter one
+        //  setsortTimes(sortTimes+1)
        }
        setsortTimes(sortTimes+1)
      }
@@ -65,23 +69,39 @@ const AlgoBoard = (props) => {
   return
 }
 
-    const insertionSort = () => {
-      setSortType('insertion');
+    const insertionSort = (input = []) => {
+      console.log('insertion');
+      // Edge case
+      if(!Array.isArray(input)) return input;
+      // first loop from second element to last element
+      for(let curIndex = 1; curIndex < input.length; curIndex++){
+        let curElement = input[curIndex]['sales']; // current Element
+        let prevIndex= curIndex - 1; // previous Index
+        // second loop (insertion loop)
+        while(prevIndex >= 0 && input[prevIndex]['sales'] > curElement){ // second loop condition previous element is greater than current
+          input[prevIndex+1]['sales'] = input[prevIndex]['sales']; // 
+          prevIndex = prevIndex -1;
+          // setsortTimes(sortTimes+1)
+        }
+        input[prevIndex+1]['sales'] = curElement;
+      }
+      setsortTimes(sortTimes+1)
+      return
     }
 
-    const mergeSort = () => {
-      setSortType('merge');
+    const mergeSort = (input = []) => {
+      console.log('merge');
     }
 
-    const selectionSort = () => {
-      setSortType('selection');
+    const selectionSort = (input = []) => {
+      console.log('selection');
     }
-    const quickSort = () => {
-      setSortType('quick');
+    const quickSort = (input = []) => {
+      console.log('quick');
     }
 
-    const heapSort = () => {
-      setSortType('heap');
+    const heapSort = (input = []) => {
+      console.log('heap');
     }
 
     
@@ -107,6 +127,7 @@ const AlgoBoard = (props) => {
     notes: 
     barChart component is not finalized yet. should not display the component when parent component was mounted.√
     figure out how to stop running random state, sortType state and data state not to run when the component was mounted. x
+    add new something to handle the after sorted effect.
     */
    /*
    before changning the DOM
@@ -115,7 +136,7 @@ const AlgoBoard = (props) => {
     return (
         <div className="App">
           <input type ='button' value = 'Bubble Sort' onClick = {()=>{bubbleSort(data)}}/>
-          <input type ='button' value = 'Insertion Sort' onClick = {()=>{insertionSort()}}/>
+          <input type ='button' value = 'Insertion Sort' onClick = {()=>{insertionSort(data)}}/>
           <input type ='button' value = 'Merge Sort' onClick = {()=>{mergeSort()}}/>
           <input type ='button' value = 'Selection Sort' onClick = {()=>{selectionSort()}}/>
           <input type ='button' value = 'Quick Sort' onClick = {()=>{quickSort()}}/>
