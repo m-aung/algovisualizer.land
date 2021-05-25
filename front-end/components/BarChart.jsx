@@ -4,7 +4,7 @@ import React ,{useState,useEffect}from 'react';
 import AlgoBoard from './Sort-board';
 // import * as SORT from '../algorithms/sorts/SORTS'
 
-const BarChart = ({ data , isClicked, algorithm}) =>{
+const BarChart = ({ data , randomClicks, sortClicks}) =>{
     const ref = useD3(
       (svg) => {
         const height = 650;
@@ -13,7 +13,7 @@ const BarChart = ({ data , isClicked, algorithm}) =>{
   
         const x = d3
           .scaleBand()
-          .domain(data.map((d) => d.year))
+          .domain(data.map((d) => d.id))
           .rangeRound([margin.left, width - margin.right])
           .padding(0.1);
   
@@ -26,12 +26,14 @@ const BarChart = ({ data , isClicked, algorithm}) =>{
           g.attr("transform", `translate(0,${height - margin.bottom})`).call(
             d3
               .axisBottom(x)
+              /*
               .tickValues(
                 d3
                   .ticks(...d3.extent(x.domain()), width / 40)
                   .filter((v) => x(v) !== undefined)
               )
               .tickSizeOuter(0)
+              */
           );
   
         const y1Axis = (g) =>
@@ -60,16 +62,17 @@ const BarChart = ({ data , isClicked, algorithm}) =>{
           .data(data)
           .join("rect")
           .attr("class", "bar")
-          .attr("x", (d) => x(d.year))
+          .attr("x", (d) => x(d.id))
           .attr("width", x.bandwidth())
           .attr("y", (d) => y1(d.sales))
           .attr("height", (d) => y1(0) - y1(d.sales));
       },
-      [data.length,isClicked, algorithm]
+      [data.length, randomClicks, sortClicks]
       // [data]
     );
 
-
+    console.log('randomClicks: ', randomClicks)
+    console.log('sortClicks: ', sortClicks)
   
     return (
       <svg

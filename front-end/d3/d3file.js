@@ -5,6 +5,7 @@ export const useD3 = (renderChartFn, dependencies) => {
     const ref = useRef();
 
     useEffect(() => {
+      // console.log('from d3: ',ref.curret)
         renderChartFn(d3.select(ref.current));
         return () => {};
       }, dependencies);
