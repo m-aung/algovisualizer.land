@@ -1,15 +1,15 @@
 import * as d3 from 'd3';
 import { useD3 } from '../d3/d3file';
 import React ,{useState,useEffect}from 'react';
-import AlgoBoard from './Sort-board';
+// import AlgoBoard from './Sort-board';
 // import * as SORT from '../algorithms/sorts/SORTS'
 
 const BarChart = ({ data , randomClicks, sortClicks}) =>{
     const ref = useD3(
       (svg) => {
-        const height = 650;
+        const height = 550;
         const width = 600;
-        const margin = { top: 30, right: 30, bottom: 30, left: 40 };
+        const margin = { top: 30, right: 30, bottom: 10, left: 40 };
   
         const x = d3
           .scaleBand()
@@ -78,7 +78,7 @@ const BarChart = ({ data , randomClicks, sortClicks}) =>{
       <svg
         ref={ref}
         style={{
-          height: 700,
+          height: 600,
           width: "100%",
           marginRight: "0px",
           marginLeft: "0px",

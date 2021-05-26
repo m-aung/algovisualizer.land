@@ -14,8 +14,8 @@ const AlgoBoard = (props) => {
 
   let displayComponent = <BarChart data={data} randomClicks = {randomClicks} sortClicks = {sortTimes} /> 
   let noDataComponent = <div id="noData"> Click on the <strong>New Random Data</strong> to begin </div>
-  let errorComponent = <div id="error">{err.message}</div>
-  let timeComponent = <div id="time">{time}</div>
+  let messageComponent = <div id="message">{time}<br/>{err.message}</div> 
+
   
     const randomSales = (arr = []) => {
 
@@ -100,7 +100,7 @@ const AlgoBoard = (props) => {
       }
       const timeEnded = Date.now()
       const timeElapsed = ((timeStarted - timeEnded)/1000).toString() + 's'
-      console.log('time Elapsed: ',timeElapsed)
+      // console.log('time Elapsed: ',timeElapsed)
       setsortTimes(sortTimes+1)
       setDataRequired(true)
       setTime(timeElapsed)
@@ -223,15 +223,15 @@ const AlgoBoard = (props) => {
     useEffect(()=>{
       setData(randomSales())
       setDataRequired(null)
+      setTime('')
       return(()=> {setData(randomSales())
       setsortTimes(0)})
     },[randomClicks])
     useEffect(()=>{
       setErr({message: "Please generate new data to use sort algorithms again"})
-      return(()=> {
-
+      return(()=> {// setDataRequired(null)
       })
-    },[dataRequired,time])
+    },[dataRequired])
     
     /*
     notes: 
@@ -255,7 +255,7 @@ const AlgoBoard = (props) => {
           {(randomClicks > 0) ? 
             displayComponent : 
             noDataComponent}
-            {(dataRequired) ? (timeComponent, errorComponent) : console.log('data is applied!')}
+            {(dataRequired) ? messageComponent : console.log('data is applied!')}
           <input type ='button' value = 'New Random Data' onClick ={(e)=> {
             e.preventDefault()
             setRandomClicks(randomClicks+1)
