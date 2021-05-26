@@ -2,7 +2,6 @@ import React, {useState, useEffect, useRef} from 'react';
 
 import BarChart from './BarChart';
 // import { sort } from 'd3';
-// import * as SORT from '../algorithms/sorts/SORTS'
 
 const AlgoBoard = (props) => {
   let [data,setData] = useState([])
@@ -18,7 +17,6 @@ const AlgoBoard = (props) => {
   
     const randomSales = (arr = []) => {
 
-        //36 years
         let counter = 0;
         
         while(counter < 36){
@@ -32,52 +30,52 @@ const AlgoBoard = (props) => {
         return arr;
     }
   const deepCopyObject = (original) => {
-      let cloned, value, key
+    let cloned, value, key
 
-  if (typeof original !== "object" || original === null) {
-    return original // Return the value if original is not an object
+    if (typeof original !== "object" || original === null) {
+      return original // Return the value if original is not an object
+    }
+
+    // Create an array or object to hold the values
+    cloned = Array.isArray(original) ? [] : {}
+
+    for (key in original) {
+      value = original[key]
+
+      // Recursively (deep) copy for nested objects, including arrays
+      cloned[key] = deepCopyObject(value)
+    }
+
+    return cloned
   }
-
-  // Create an array or object to hold the values
-  cloned = Array.isArray(original) ? [] : {}
-
-  for (key in original) {
-    value = original[key]
-
-    // Recursively (deep) copy for nested objects, including arrays
-    cloned[key] = deepCopyObject(value)
-  }
-
-  return cloned
-}
-    const bubbleSort = (input = []) => {
+  const bubbleSort = (input = []) => {
     // Edge case
-   if(!Array.isArray(input)) return input;
-   const timeStarted = Date.now()
-   // first loop from 0 to last element
-   for (let first = 0; first < input.length; first++){
-   // second loop from cur element of first loop to last element
-     for(let second = first+1; second < input.length; second++){
-       if(input[first]["sales"] > input[second]["sales"]){ // is the first element is greater than second
-         // create a variable the first element by value
-         const temp = input[first];
-         // assign the first element to second one
-         input[first] = input[second];
-         // assign the second element to variable
-         input[second] = temp;
-         // increment the sort counter one
-        //  setsortTimes(sortTimes+1)
-       }
-       setsortTimes(sortTimes+1)
-     }
-   }
-      const timeEnded = Date.now()
-      const timeElapsed = (timeEnded-timeStarted)/1000
-      setsortTimes(sortTimes+1)
-      setDataRequired(true)
-      setTime(`${timeElapsed} s`)
-  return
-}
+    if(!Array.isArray(input)) return input;
+    const timeStarted = Date.now()
+    // first loop from 0 to last element
+    for (let first = 0; first < input.length; first++){
+    // second loop from cur element of first loop to last element
+      for(let second = first+1; second < input.length; second++){
+        if(input[first]["sales"] > input[second]["sales"]){ // is the first element is greater than second
+          // create a variable the first element by value
+          const temp = input[first];
+          // assign the first element to second one
+          input[first] = input[second];
+          // assign the second element to variable
+          input[second] = temp;
+          // increment the sort counter one
+          //  setsortTimes(sortTimes+1)
+        }
+        setsortTimes(sortTimes+1)
+      }
+    }
+    const timeEnded = Date.now()
+    const timeElapsed = (timeEnded-timeStarted)/1000
+    setsortTimes(sortTimes+1)
+    setDataRequired(true)
+    setTime(`${timeElapsed} s`)
+    return
+  }
 
     const insertionSort = (input = []) => {
       // starting from second element and insert to the previous index if the current element is lower than previous element
@@ -108,37 +106,37 @@ const AlgoBoard = (props) => {
       return
     }
 
-    //helper function for merge
-    const merge = (arr1,arr2)=> {
-      const timeStarted = Date.now()
-      const output = []
-      // loop 1: arr1 and arr2 both have lengths
-      while(arr1.length && arr2.length){
-        // if first element of arr 1 is less than that of arr 2, push it into output and shift it out
-        // else that of arr 2 into output and slice it(arr2[0]) shift out
-        (arr1[0]["sales"] <= arr2[0]["sales"])? output.push(arr1.shift()): output.push(arr2.shift())
-        setData(output)
-      }
-      // loop 2: for the remaining elements of arr1
-      while(arr1.length){
-        // push each element of arr1 into output and shift it out
-        output.push(arr1.shift())
-        setData(output)
-      }
-      while(arr2.length){
-        // push each element of arr2 into output and shift it out
-        output.push(arr2.shift())
-        setData(output)
-      }
-      setsortTimes(sortTimes+1)
+  //helper function for merge
+  const merge = (arr1,arr2) => {
+    const timeStarted = Date.now()
+    const output = []
+    // loop 1: arr1 and arr2 both have lengths
+    while(arr1.length && arr2.length){
+      // if first element of arr 1 is less than that of arr 2, push it into output and shift it out
+      // else that of arr 2 into output and slice it(arr2[0]) shift out
+      (arr1[0]["sales"] <= arr2[0]["sales"])? output.push(arr1.shift()): output.push(arr2.shift())
       setData(output)
-      const timeEnded = Date.now()
-      const timeElapsed = (timeEnded-timeStarted)/1000
-      setsortTimes(sortTimes+1)
-      setDataRequired(true)
-      setTime(`${timeElapsed} s`)
-      return output
     }
+    // loop 2: for the remaining elements of arr1
+    while(arr1.length){
+      // push each element of arr1 into output and shift it out
+      output.push(arr1.shift())
+      setData(output)
+    }
+    while(arr2.length){
+      // push each element of arr2 into output and shift it out
+      output.push(arr2.shift())
+      setData(output)
+    }
+    setsortTimes(sortTimes+1)
+    setData(output)
+    const timeEnded = Date.now()
+    const timeElapsed = (timeEnded-timeStarted)/1000
+    setsortTimes(sortTimes+1)
+    setDataRequired(true)
+    setTime(`${timeElapsed} s`)
+    return output
+  }
 
     const mergeSort = (input = []) => {
       // divide and conquer method
@@ -191,96 +189,97 @@ const AlgoBoard = (props) => {
         arr[leftIndex] = arr[rightIndex];
         arr[rightIndex] = temp;
      };
-     const partition = (arr, left, right) => {
-       // creating pivot point
-        let pivot = arr[Math.floor((right + left) / 2)]['sales'];
-        while (left<= right) {
-           while (arr[left]['sales'] < pivot) {
-              left++;
-           };
-           while (arr[right]['sales'] > pivot) {
-              right--;
-           };
-           if (left <= right) {
-              swaper(arr, left, right); //sawpping two elements
-              left++;
-              right--;
-           };
+  const partition = (arr, left, right) => {
+    // creating pivot point
+    let pivot = arr[Math.floor((right + left) / 2)]['sales'];
+    while (left<= right) {
+        while (arr[left]['sales'] < pivot) {
+          left++;
         };
-        return left;
-     }
-     const sorter = (arr, left = 0, right = arr.length - 1) => {
-        // let index;
-        if (arr.length > 1) {
-           let index = partition(arr, left, right);
-           if (left < index - 1) {
-              sorter(arr, left, index - 1);
-           };
-           if (index < right) {
-              sorter(arr, index, right);
-           };
-        }
-        setData(arr)
-        setsortTimes(sortTimes+1)
-        return arr;
-     }
-     setDataRequired(true);
-     const timeEnded = Date.now()
-      const timeElapsed = (timeEnded-timeStarted)/1000
-      setsortTimes(sortTimes+1)
-      setDataRequired(true)
-      setTime(`${timeElapsed} s`)
-     return sorter(input)
+        while (arr[right]['sales'] > pivot) {
+          right--;
+        };
+        if (left <= right) {
+          swaper(arr, left, right); //sawpping two elements
+          left++;
+          right--;
+        };
+    };
+    return left;
+  }
+  const sorter = (arr, left = 0, right = arr.length - 1) => {
+    // let index;
+    if (arr.length > 1) {
+      let index = partition(arr, left, right);
+      if (left < index - 1) {
+        sorter(arr, left, index - 1);
+      };
+      if (index < right) {
+        sorter(arr, index, right);
+      };
     }
+    setData(arr)
+    setsortTimes(sortTimes+1)
+    return arr;
+    }
+    setDataRequired(true);
+    const timeEnded = Date.now()
+    const timeElapsed = (timeEnded-timeStarted)/1000
+    setsortTimes(sortTimes+1)
+    setDataRequired(true)
+    setTime(`${timeElapsed} s`)
+    return sorter(input)
+  }
 
-    const heapSort = (input = []) => {
-      const timeStarted = Date.now()
-    }
-    // when randomClicks state is updated
-    useEffect(()=>{
-      setData(randomSales())
-      setDataRequired(null)
-      setTime('')
-      return(()=> {setData(randomSales())
-      setsortTimes(0)})
-    },[randomClicks])
-    useEffect(()=>{
-      setErr({message: "Please generate new data to use sort algorithms again"})
-      return(()=> {// setDataRequired(null)
-      })
-    },[dataRequired, time])
+  const heapSort = (input = []) => {
+    const timeStarted = Date.now()
+  }
+  // when randomClicks state is updated
+  useEffect(()=>{
+    setData(randomSales())
+    setDataRequired(null)
+    setTime('')
+    return(()=> {setData(randomSales())
+    setsortTimes(0)})
+  },[randomClicks])
+  useEffect(()=>{
+    setErr({message: "Please generate new data to use sort algorithms again"})
+    return(()=> { // setDataRequired(null)
+    })
+  },[dataRequired, time])
     
     /*
     notes: 
-    barChart component is not finalized yet. should not display the component when parent component was mounted.√
-    figure out how to stop running random state, sortType state and data state not to run when the component was mounted. x
-    add new something to handle the after sorted effect.
-    add time consuming tracker
+    barChart component is not finalized yet-should not display the component when parent component was mounted.√
+    stop running random state, sortType state and data state not to run when the component was mounted. √
+    add new something to handle the after sorted effect.√
+    add time consuming tracker√
+    need the data to be presistent 
     */
    /*
-   before changning the DOM
+   additional features:
 
    */
-    return (
-        <div className="App">
-          <input type ='button' value = 'Bubble Sort' disabled = {dataRequired} onClick = {()=>{bubbleSort(data)}}/>
-          <input type ='button' value = 'Insertion Sort' disabled = {dataRequired} onClick = {()=>{insertionSort(data)}}/>
-          <input type ='button' value = 'Merge Sort' disabled = {dataRequired} onClick = {()=>{mergeSort(data)}}/>
-          <input type ='button' value = 'Selection Sort' disabled = {dataRequired} onClick = {()=>{selectionSort(data)}}/>
-          <input type ='button' value = 'Quick Sort' disabled = {dataRequired} onClick = {()=>{quickSort(data)}}/>
-          <input type ='button' value = 'Heap Sort' disabled = {dataRequired} onClick = {()=>{heapSort(data)}}/>
-          {(randomClicks > 0) ? 
-            displayComponent : 
-            noDataComponent}
-            {(dataRequired) ? messageComponent : console.log('data is applied!')}
-          <input type ='button' value = 'New Random Data' onClick ={(e)=> {
-            e.preventDefault()
-            setRandomClicks(randomClicks+1)
-          }
-          }/>
-            <div className = 'algo'>
-            </div>
+  return (
+    <div className="App">
+      <input type ='button' value = 'Bubble Sort' disabled = {dataRequired} onClick = {()=>{bubbleSort(data)}}/>
+      <input type ='button' value = 'Insertion Sort' disabled = {dataRequired} onClick = {()=>{insertionSort(data)}}/>
+      <input type ='button' value = 'Merge Sort' disabled = {dataRequired} onClick = {()=>{mergeSort(data)}}/>
+      <input type ='button' value = 'Selection Sort' disabled = {dataRequired} onClick = {()=>{selectionSort(data)}}/>
+      <input type ='button' value = 'Quick Sort' disabled = {dataRequired} onClick = {()=>{quickSort(data)}}/>
+      <input type ='button' value = 'Heap Sort' disabled = {dataRequired} onClick = {()=>{heapSort(data)}}/>
+      {(randomClicks > 0) ? 
+        displayComponent : 
+        noDataComponent}
+        {(dataRequired) ? messageComponent : console.log('data is applied!')}
+      <input type ='button' value = 'New Random Data' onClick ={(e)=> {
+        e.preventDefault()
+        setRandomClicks(randomClicks+1)
+      }
+      }/>
+        <div className = 'algo'>
         </div>
-      );
+    </div>
+  );
 }
 export default AlgoBoard;
