@@ -15,7 +15,6 @@ const AlgoBoard = (props) => {
   let displayComponent = <BarChart data={data} randomClicks = {randomClicks} sortClicks = {sortTimes} /> 
   let noDataComponent = <div id="noData"> Click on the <strong>New Random Data</strong> to begin </div>
   let messageComponent = <div id="message">{time}<br/>{err.message}</div> 
-
   
     const randomSales = (arr = []) => {
 
@@ -54,7 +53,7 @@ const AlgoBoard = (props) => {
     const bubbleSort = (input = []) => {
     // Edge case
    if(!Array.isArray(input)) return input;
-   setTime(Date.now())
+   const timeStarted = Date.now()
    // first loop from 0 to last element
    for (let first = 0; first < input.length; first++){
    // second loop from cur element of first loop to last element
@@ -72,8 +71,11 @@ const AlgoBoard = (props) => {
        setsortTimes(sortTimes+1)
      }
    }
-   setDataRequired(true);
-   setTime(Date.now())
+      const timeEnded = Date.now()
+      const timeElapsed = (timeEnded-timeStarted)/1000
+      setsortTimes(sortTimes+1)
+      setDataRequired(true)
+      setTime(`${timeElapsed} s`)
   return
 }
 
@@ -99,16 +101,16 @@ const AlgoBoard = (props) => {
         input[prevIndex+1]['sales'] = curElement; // swaping the previous Index to current element
       }
       const timeEnded = Date.now()
-      const timeElapsed = ((timeStarted - timeEnded)/1000).toString() + 's'
-      // console.log('time Elapsed: ',timeElapsed)
+      const timeElapsed = (timeEnded-timeStarted)/1000
       setsortTimes(sortTimes+1)
       setDataRequired(true)
-      setTime(timeElapsed)
+      setTime(`${timeElapsed} s`)
       return
     }
 
     //helper function for merge
     const merge = (arr1,arr2)=> {
+      const timeStarted = Date.now()
       const output = []
       // loop 1: arr1 and arr2 both have lengths
       while(arr1.length && arr2.length){
@@ -130,14 +132,17 @@ const AlgoBoard = (props) => {
       }
       setsortTimes(sortTimes+1)
       setData(output)
-      setDataRequired(true);
+      const timeEnded = Date.now()
+      const timeElapsed = (timeEnded-timeStarted)/1000
+      setsortTimes(sortTimes+1)
+      setDataRequired(true)
+      setTime(`${timeElapsed} s`)
       return output
     }
 
     const mergeSort = (input = []) => {
       // divide and conquer method
       // divide the array into arrays with one element
-
       // edge case
       if(!Array.isArray(input)) return 
       // when array has less than 2 elements
@@ -153,6 +158,7 @@ const AlgoBoard = (props) => {
       
     const selectionSort = (input = []) => {
       // find the minimum element and place it in the front using two pointers
+      const timeStarted = Date.now()
       // loop 1: from 0 -> input.length
       for(let i = 0; i < input.length; i++){
           // loop 2: from next element of first loop -> input.length
@@ -169,10 +175,16 @@ const AlgoBoard = (props) => {
         }
       }
       setDataRequired(true);
+      const timeEnded = Date.now()
+      const timeElapsed = (timeEnded-timeStarted)/1000
+      setsortTimes(sortTimes+1)
+      setDataRequired(true)
+      setTime(`${timeElapsed} s`)
       return input
     }
     const quickSort = (input = []) => {
       // use partition algorithm
+      const timeStarted = Date.now()
       const swaper = (arr, leftIndex, rightIndex) => {
         // swaper function
         let temp = arr[leftIndex];
@@ -213,11 +225,16 @@ const AlgoBoard = (props) => {
         return arr;
      }
      setDataRequired(true);
+     const timeEnded = Date.now()
+      const timeElapsed = (timeEnded-timeStarted)/1000
+      setsortTimes(sortTimes+1)
+      setDataRequired(true)
+      setTime(`${timeElapsed} s`)
      return sorter(input)
     }
 
     const heapSort = (input = []) => {
-      console.log('heap');
+      const timeStarted = Date.now()
     }
     // when randomClicks state is updated
     useEffect(()=>{
@@ -231,7 +248,7 @@ const AlgoBoard = (props) => {
       setErr({message: "Please generate new data to use sort algorithms again"})
       return(()=> {// setDataRequired(null)
       })
-    },[dataRequired])
+    },[dataRequired, time])
     
     /*
     notes: 
