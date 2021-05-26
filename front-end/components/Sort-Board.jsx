@@ -8,9 +8,13 @@ const AlgoBoard = (props) => {
   let [data,setData] = useState([])
   let [randomClicks,setRandomClicks] = useState(0)
   let [sortTimes, setsortTimes] = useState(0)
+  let [dataRequired,setDataRequired] = useState(null)
+  let [err, setErr] = useState({message: "unknown"})
 
   let displayComponent = <BarChart data={data} randomClicks = {randomClicks} sortClicks = {sortTimes} /> 
-  let noDataComponent = <div id="noData"> Click on the <strong>New Random Data</strong> to begin </div>;
+  let noDataComponent = <div id="noData"> Click on the <strong>New Random Data</strong> to begin </div>
+let errorComponent = <div id="error">{err}</div>
+let timeComponent = <div id="time">{}</div>
   
     const randomSales = (arr = []) => {
 
@@ -66,6 +70,7 @@ const AlgoBoard = (props) => {
        setsortTimes(sortTimes+1)
      }
    }
+   setDataRequired(true);
   return
 }
 
@@ -89,6 +94,7 @@ const AlgoBoard = (props) => {
         input[prevIndex+1]['sales'] = curElement; // swaping the previous Index to current element
       }
       setsortTimes(sortTimes+1)
+      setDataRequired(true);
       return
     }
 
@@ -115,6 +121,7 @@ const AlgoBoard = (props) => {
       }
       setsortTimes(sortTimes+1)
       setData(output)
+      setDataRequired(true);
       return output
     }
 
@@ -131,6 +138,7 @@ const AlgoBoard = (props) => {
       const midIndex = Math.floor(input.length/2)
       const left = input.slice(0, midIndex), right = input.slice(midIndex, input.length)
       setsortTimes(sortTimes+1)
+      setDataRequired(true);
       return merge(mergeSort(left),mergeSort(right))
     }
       
@@ -151,6 +159,7 @@ const AlgoBoard = (props) => {
           }
         }
       }
+      setDataRequired(true);
       return input
     }
     const quickSort = (input = []) => {
@@ -194,6 +203,7 @@ const AlgoBoard = (props) => {
         setsortTimes(sortTimes+1)
         return arr;
      }
+     setDataRequired(true);
      return sorter(input)
     }
 
@@ -206,6 +216,10 @@ const AlgoBoard = (props) => {
       return(()=> {setData(randomSales())
       setsortTimes(0)})
     },[randomClicks])
+    useEffect(()=>{
+      setErr({message: "Please generate new data to use sort algorithms again"})
+      return(()=> {setDataRequired(null)})
+    },[dataRequired])
     
     /*
     notes: 
@@ -229,6 +243,7 @@ const AlgoBoard = (props) => {
           {(randomClicks > 0) ? 
             displayComponent : 
             noDataComponent}
+            {(dataRequired) ? errorComponent : timeComponent}
           <input type ='button' value = 'New Random Data' onClick ={(e)=> {
             e.preventDefault()
             setRandomClicks(randomClicks+1)
