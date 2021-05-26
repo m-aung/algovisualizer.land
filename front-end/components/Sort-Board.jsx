@@ -10,11 +10,12 @@ const AlgoBoard = (props) => {
   let [sortTimes, setsortTimes] = useState(0)
   let [dataRequired,setDataRequired] = useState(null)
   let [err, setErr] = useState({message: "unknown"})
+  let [time, setTime] = useState(null)
 
   let displayComponent = <BarChart data={data} randomClicks = {randomClicks} sortClicks = {sortTimes} /> 
   let noDataComponent = <div id="noData"> Click on the <strong>New Random Data</strong> to begin </div>
-let errorComponent = <div id="error">{err}</div>
-let timeComponent = <div id="time">{}</div>
+  let errorComponent = <div id="error">{err.message}</div>
+  let timeComponent = <div id="time">{time}</div>
   
     const randomSales = (arr = []) => {
 
@@ -53,6 +54,7 @@ let timeComponent = <div id="time">{}</div>
     const bubbleSort = (input = []) => {
     // Edge case
    if(!Array.isArray(input)) return input;
+   setTime(Date.now())
    // first loop from 0 to last element
    for (let first = 0; first < input.length; first++){
    // second loop from cur element of first loop to last element
@@ -71,6 +73,7 @@ let timeComponent = <div id="time">{}</div>
      }
    }
    setDataRequired(true);
+   setTime(Date.now())
   return
 }
 
@@ -78,6 +81,8 @@ let timeComponent = <div id="time">{}</div>
       // starting from second element and insert to the previous index if the current element is lower than previous element
       // Edge case
       if(!Array.isArray(input)) return input;
+      // time started
+      const timeStarted = Date.now()
       // first loop from second element to last element
       for(let curIndex = 1; curIndex < input.length; curIndex++){
         let curElement = input[curIndex]['sales']; // current Element
@@ -93,8 +98,12 @@ let timeComponent = <div id="time">{}</div>
         }
         input[prevIndex+1]['sales'] = curElement; // swaping the previous Index to current element
       }
+      const timeEnded = Date.now()
+      const timeElapsed = ((timeStarted - timeEnded)/1000).toString() + 's'
+      console.log('time Elapsed: ',timeElapsed)
       setsortTimes(sortTimes+1)
-      setDataRequired(true);
+      setDataRequired(true)
+      setTime(timeElapsed)
       return
     }
 
@@ -213,13 +222,16 @@ let timeComponent = <div id="time">{}</div>
     // when randomClicks state is updated
     useEffect(()=>{
       setData(randomSales())
+      setDataRequired(null)
       return(()=> {setData(randomSales())
       setsortTimes(0)})
     },[randomClicks])
     useEffect(()=>{
       setErr({message: "Please generate new data to use sort algorithms again"})
-      return(()=> {setDataRequired(null)})
-    },[dataRequired])
+      return(()=> {
+
+      })
+    },[dataRequired,time])
     
     /*
     notes: 
@@ -234,16 +246,16 @@ let timeComponent = <div id="time">{}</div>
    */
     return (
         <div className="App">
-          <input type ='button' value = 'Bubble Sort' onClick = {()=>{bubbleSort(data)}}/>
-          <input type ='button' value = 'Insertion Sort' onClick = {()=>{insertionSort(data)}}/>
-          <input type ='button' value = 'Merge Sort' onClick = {()=>{mergeSort(data)}}/>
-          <input type ='button' value = 'Selection Sort' onClick = {()=>{selectionSort(data)}}/>
-          <input type ='button' value = 'Quick Sort' onClick = {()=>{quickSort(data)}}/>
-          <input type ='button' value = 'Heap Sort' onClick = {()=>{heapSort(data)}}/>
+          <input type ='button' value = 'Bubble Sort' disabled = {dataRequired} onClick = {()=>{bubbleSort(data)}}/>
+          <input type ='button' value = 'Insertion Sort' disabled = {dataRequired} onClick = {()=>{insertionSort(data)}}/>
+          <input type ='button' value = 'Merge Sort' disabled = {dataRequired} onClick = {()=>{mergeSort(data)}}/>
+          <input type ='button' value = 'Selection Sort' disabled = {dataRequired} onClick = {()=>{selectionSort(data)}}/>
+          <input type ='button' value = 'Quick Sort' disabled = {dataRequired} onClick = {()=>{quickSort(data)}}/>
+          <input type ='button' value = 'Heap Sort' disabled = {dataRequired} onClick = {()=>{heapSort(data)}}/>
           {(randomClicks > 0) ? 
             displayComponent : 
             noDataComponent}
-            {(dataRequired) ? errorComponent : timeComponent}
+            {(dataRequired) ? (timeComponent, errorComponent) : console.log('data is applied!')}
           <input type ='button' value = 'New Random Data' onClick ={(e)=> {
             e.preventDefault()
             setRandomClicks(randomClicks+1)
