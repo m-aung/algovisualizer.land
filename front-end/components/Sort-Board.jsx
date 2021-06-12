@@ -4,22 +4,22 @@ import BarChart from './BarChart';
 // import { sort } from 'd3';
 
 const AlgoBoard = (props) => {
-  let [data,setData] = useState([])
-  let [randomClicks,setRandomClicks] = useState(0)
-  let [sortTimes, setsortTimes] = useState(0)
-  let [dataRequired,setDataRequired] = useState(true)
-  let [err, setErr] = useState({message: "unknown"})
-  let [time, setTime] = useState(null)
+  let [data,setData] = useState([]) // data for d3
+  let [sortData, setSortData] = useState([])
+  let [randomClicks,setRandomClicks] = useState(0) // randomClicks count
+  let [sortTimes, setsortTimes] = useState(0) // sorting time
+  let [dataRequired,setDataRequired] = useState(true) // new data requirement
+  let [err, setErr] = useState({message: "unknown"}) // error state
+  let [time, setTime] = useState(null) //
 
-  let displayComponent = <BarChart data={data} randomClicks = {randomClicks} sortClicks = {sortTimes} sortTimes={sortTimes}/> 
+
+  let displayComponent = <BarChart data={data} randomClicks = {randomClicks} sortClicks = {sortTimes}/> 
   let noDataComponent = <div id="noData"> Click on the <strong>New Random Data</strong> to begin </div>
   let messageComponent = <div id="message">{time}<br/>{err.message}</div> 
-  
-  console.log('setDataRequired: ', setDataRequired)
-    const randomSales = (arr = []) => {
 
+  // randomize the data
+    const randomSales = (arr = []) => {
         let counter = 0;
-        
         while(counter < 36){
           let curObj = {}
           curObj["id"] = counter
@@ -50,9 +50,11 @@ const AlgoBoard = (props) => {
     return cloned
   }
   const bubbleSort = async (input = []) => {
+    setDataRequired(true)
     // Edge case
     if(!Array.isArray(input)) return input;
     const timeStarted = Date.now()
+    let counter = 1;
     // first loop from 0 to last element
     for (let first = 0; first < input.length; first++){
     // second loop from cur element of first loop to last element
@@ -66,20 +68,33 @@ const AlgoBoard = (props) => {
           input[second] = temp;
           // increment the sort counter one
           //  setsortTimes(sortTimes+1)
+          setTimeout(()=>{
+            setSortData(input)
+            setsortTimes((prevState)=> {prevState+1})
+          },second*3000)
+          console.log('counter from inner loop: ', counter)
+          // console.log('sortTime from inner loop: ', sortTimes)
         }
-        setTimeout(setData(input),i*1000)
-        setsortTimes(sortTimes+1)
+        counter++
       }
+      counter++
+      setTimeout(()=>{
+        setSortData(input)
+        setsortTimes((prevState)=> {prevState+1})
+      },first*3000)
+      // console.log('sortTime from outer loop: ', sortTimes)
     }
+    console.log('counter end of the loop: ', counter)
+    console.log('sortTimes from end of the loop: ', sortTimes)
     const timeEnded = Date.now()
-    const timeElapsed = (timeEnded-timeStarted)/1000
-    setsortTimes(sortTimes+1)
-    // setDataRequired(true)
-    setTime(`${timeElapsed} s`)
+    const timeElapsed = (timeEnded-timeStarted)
+    // setsortTimes(sortTimes+1)
+    setTime(`${timeElapsed} milliseconds`)
     return
   }
 
     const insertionSort = (input = []) => {
+      setDataRequired(true)
       // starting from second element and insert to the previous index if the current element is lower than previous element
       // Edge case
       if(!Array.isArray(input)) return input;
@@ -101,15 +116,15 @@ const AlgoBoard = (props) => {
         input[prevIndex+1]['sales'] = curElement; // swaping the previous Index to current element
       }
       const timeEnded = Date.now()
-      const timeElapsed = (timeEnded-timeStarted)/1000
-      setsortTimes(sortTimes+1)
-      // setDataRequired(true)
-      setTime(`${timeElapsed} s`)
+      const timeElapsed = (timeEnded-timeStarted)
+      // setsortTimes(sortTimes+1)
+      setTime(`${timeElapsed} milliseconds`)
       return
     }
 
   //helper function for merge
   const merge = (arr1,arr2) => {
+    setDataRequired(true)
     const timeStarted = Date.now()
     const output = []
     // loop 1: arr1 and arr2 both have lengths
@@ -130,17 +145,17 @@ const AlgoBoard = (props) => {
       output.push(arr2.shift())
       setData(output)
     }
-    setsortTimes(sortTimes+1)
+    // setsortTimes(sortTimes+1)
     setData(output)
     const timeEnded = Date.now()
-    const timeElapsed = (timeEnded-timeStarted)/1000
-    setsortTimes(sortTimes+1)
-    // setDataRequired(true)
-    setTime(`${timeElapsed} s`)
+    const timeElapsed = (timeEnded-timeStarted)
+    // setsortTimes(sortTimes+1)
+    setTime(`${timeElapsed} milliseconds`)
     return output
   }
 
     const mergeSort = (input = []) => {
+      setDataRequired(true)
       // divide and conquer method
       // divide the array into arrays with one element
       // edge case
@@ -151,12 +166,12 @@ const AlgoBoard = (props) => {
       // middle index, left and right arrays
       const midIndex = Math.floor(input.length/2)
       const left = input.slice(0, midIndex), right = input.slice(midIndex, input.length)
-      setsortTimes(sortTimes+1)
-      // setDataRequired(true);
+      // setsortTimes(sortTimes+1)
       return merge(mergeSort(left),mergeSort(right))
     }
       
     const selectionSort = (input = []) => {
+      setDataRequired(true)
       // find the minimum element and place it in the front using two pointers
       const timeStarted = Date.now()
       // loop 1: from 0 -> input.length
@@ -169,20 +184,19 @@ const AlgoBoard = (props) => {
               // swap the smaller with current element
               input[i] = smaller; 
               input[j] = curElement;
-              setsortTimes(sortTimes+1)
+              // setsortTimes(sortTimes+1)
               setData(input)
           }
         }
       }
-      // setDataRequired(true);
       const timeEnded = Date.now()
-      const timeElapsed = (timeEnded-timeStarted)/1000
-      setsortTimes(sortTimes+1)
-      // setDataRequired(true)
-      setTime(`${timeElapsed} s`)
+      const timeElapsed = (timeEnded-timeStarted)
+      // setsortTimes(sortTimes+1)
+      setTime(`${timeElapsed} milliseconds`)
       return input
     }
     const quickSort = (input = []) => {
+      setDataRequired(true)
       // use partition algorithm
       const timeStarted = Date.now()
       const swaper = (arr, leftIndex, rightIndex) => {
@@ -221,38 +235,39 @@ const AlgoBoard = (props) => {
       };
     }
     setData(arr)
-    setsortTimes(sortTimes+1)
+    // setsortTimes(sortTimes+1)
     return arr;
     }
-    // setDataRequired(true);
+
     const timeEnded = Date.now()
-    const timeElapsed = (timeEnded-timeStarted)/1000
-    setsortTimes(sortTimes+1)
-    // setDataRequired(true)
-    setTime(`${timeElapsed} s`)
+    const timeElapsed = (timeEnded-timeStarted)
+    // setsortTimes(sortTimes+1)
+
+    setTime(`${timeElapsed} milliseconds`)
     return sorter(input)
   }
 
   const heapSort = (input = []) => {
+    setDataRequired(true)
     const timeStarted = Date.now()
   }
   useEffect(()=>{
-    // setDataRequired(true)
     console.log(dataRequired)
   },[])
+
   // when randomClicks state is updated
   useEffect(()=>{
     setData(randomSales())
-    // setDataRequired(null)
     setTime('')
-    return(()=> {setData(randomSales())
-    setsortTimes(0)})
   },[randomClicks])
   useEffect(()=>{
     setErr({message: "Please generate new data to use sort algorithms again"})
-    // return(()=> { // setDataRequired(null)
-    // })
   },[dataRequired, time])
+
+  useEffect(()=> {
+    setData(sortData)
+    console.log('from sortTime useEffect:', data)
+  },[sortTimes])
     
     /*
     notes: 
@@ -268,7 +283,7 @@ const AlgoBoard = (props) => {
    */
   return (
     <div className="App">
-      <input type ='button' value = 'Bubble Sort' disabled = {dataRequired} onClick = {()=>{bubbleSort(data)}}/>
+      <input type ='button' value = 'Bubble Sort' disabled={dataRequired} onClick = {()=>{bubbleSort(data)}}/>
       <input type ='button' value = 'Insertion Sort' disabled = {dataRequired} onClick = {()=>{insertionSort(data)}}/>
       <input type ='button' value = 'Merge Sort' disabled = {dataRequired} onClick = {()=>{mergeSort(data)}}/>
       <input type ='button' value = 'Selection Sort' disabled = {dataRequired} onClick = {()=>{selectionSort(data)}}/>
@@ -280,6 +295,7 @@ const AlgoBoard = (props) => {
         {(dataRequired) ? messageComponent : console.log('data is applied!')}
       <input type ='button' value = 'New Random Data' onClick ={(e)=> {
         e.preventDefault()
+        setDataRequired(false)
         setRandomClicks(randomClicks+1)
       }
       }/>

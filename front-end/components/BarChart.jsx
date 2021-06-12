@@ -5,8 +5,11 @@ import {useReducer} from'react-router-dom';
 
 const BarChart = ({ data , randomClicks, sortClicks, sortTime}) =>{
   // const [state, dispatch] = useReducer(chartReducer,initialState)
+  console.log('BarChart is updated!')
   const ref = useD3(
     (svg) => {
+      console.log('svg updated!')
+      // console.log('data from svg: ',data[0]["sales"])
       const height = 550;
       const width = 600;
       const margin = { top: 30, right: 30, bottom: 10, left: 40 };
