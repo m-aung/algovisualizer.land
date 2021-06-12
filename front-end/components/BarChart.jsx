@@ -1,8 +1,10 @@
 import * as d3 from 'd3';
 import { useD3 } from '../d3/d3file';
 import React ,{useState,useEffect}from 'react';
+import {useReducer} from'react-router-dom';
 
-const BarChart = ({ data , randomClicks, sortClicks}) =>{
+const BarChart = ({ data , randomClicks, sortClicks, sortTime}) =>{
+  // const [state, dispatch] = useReducer(chartReducer,initialState)
   const ref = useD3(
     (svg) => {
       const height = 550;
@@ -65,7 +67,7 @@ const BarChart = ({ data , randomClicks, sortClicks}) =>{
         .attr("y", (d) => y1(d.sales))
         .attr("height", (d) => y1(0) - y1(d.sales));
     },
-    [data.length, randomClicks, sortClicks]
+    [data, randomClicks, sortClicks, sortTime]
   );
   return (
     <svg
