@@ -5,9 +5,9 @@ import BarChart from './BarChart';
 
 const AlgoBoard = (props) => {
   let [data,setData] = useState([]) // data for d3
-  let [sortData, setSortData] = useState([])
+  // let [sortData, setSortData] = useState([])
   let [randomClicks,setRandomClicks] = useState(0) // randomClicks count
-  let [sortTimes, setsortTimes] = useState(0) // sorting time
+  let [sortTimes, setsortTimes] = useState({"counter": 0}) // sorting time
   let [dataRequired,setDataRequired] = useState(true) // new data requirement
   let [err, setErr] = useState({message: "unknown"}) // error state
   let [time, setTime] = useState(null) //
@@ -51,41 +51,51 @@ const AlgoBoard = (props) => {
   }
   const bubbleSort = async (input = []) => {
     setDataRequired(true)
+    console.log('inputData into bubbleSort: ', input)
     // Edge case
     if(!Array.isArray(input)) return input;
     const timeStarted = Date.now()
     let counter = 1;
+    let copyOfInput = deepCopyObject(input)
     // first loop from 0 to last element
-    for (let first = 0; first < input.length; first++){
+    for (let first = 0; first < copyOfInput.length; first++){
+      let temp1;
     // second loop from cur element of first loop to last element
-      for(let second = first+1; second < input.length; second++){
-        if(input[first]["sales"] > input[second]["sales"]){ // is the first element is greater than second
+      for(let second = first+1; second < copyOfInput.length; second++){
+        let temp2;
+        if(copyOfInput[first]["sales"] > copyOfInput[second]["sales"]){ // is the first element is greater than second
           // create a variable the first element by value
-          const temp = input[first];
+          const temp = copyOfInput[first];
           // assign the first element to second one
-          input[first] = input[second];
+          copyOfInput[first] = copyOfInput[second];
           // assign the second element to variable
-          input[second] = temp;
+          copyOfInput[second] = temp;
           // increment the sort counter one
           //  setsortTimes(sortTimes+1)
           setTimeout(()=>{
-            setSortData(input)
-            setsortTimes((prevState)=> {prevState+1})
-          },second*3000)
-          console.log('counter from inner loop: ', counter)
+            temp2 = copyOfInput
+            setData(temp2)
+            // setSortData(input)
+            // setsortTimes((prevState)=> {prevState+1})
+            
+          },second*2000)
+          // console.log('counter from inner loop: ', counter)
           // console.log('sortTime from inner loop: ', sortTimes)
         }
         counter++
       }
       counter++
       setTimeout(()=>{
-        setSortData(input)
-        setsortTimes((prevState)=> {prevState+1})
-      },first*3000)
+        temp1 = copyOfInput
+        setData(temp1)
+        // setSortData(input)
+        // setsortTimes((prevState)=> {prevState+1})
+      },first*2000)
       // console.log('sortTime from outer loop: ', sortTimes)
     }
     console.log('counter end of the loop: ', counter)
-    console.log('sortTimes from end of the loop: ', sortTimes)
+    // console.log('sortTimes from end of the loop: ', sortTimes)
+    console.log('data after loop: ', data)
     const timeEnded = Date.now()
     const timeElapsed = (timeEnded-timeStarted)
     // setsortTimes(sortTimes+1)
@@ -264,10 +274,10 @@ const AlgoBoard = (props) => {
     setErr({message: "Please generate new data to use sort algorithms again"})
   },[dataRequired, time])
 
-  useEffect(()=> {
-    setData(sortData)
-    console.log('from sortTime useEffect:', data)
-  },[sortTimes])
+  // useEffect(()=> {
+  //   setData(sortData)
+  //   console.log('from sortTime useEffect:', data)
+  // },[sortTimes])
     
     /*
     notes: 
