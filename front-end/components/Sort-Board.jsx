@@ -7,14 +7,15 @@ const AlgoBoard = (props) => {
   let [data,setData] = useState([])
   let [randomClicks,setRandomClicks] = useState(0)
   let [sortTimes, setsortTimes] = useState(0)
-  let [dataRequired,setDataRequired] = useState(null)
+  let [dataRequired,setDataRequired] = useState(true)
   let [err, setErr] = useState({message: "unknown"})
   let [time, setTime] = useState(null)
 
-  let displayComponent = <BarChart data={data} randomClicks = {randomClicks} sortClicks = {sortTimes} /> 
+  let displayComponent = <BarChart data={data} randomClicks = {randomClicks} sortClicks = {sortTimes} sortTimes={sortTimes}/> 
   let noDataComponent = <div id="noData"> Click on the <strong>New Random Data</strong> to begin </div>
   let messageComponent = <div id="message">{time}<br/>{err.message}</div> 
   
+  console.log('setDataRequired: ', setDataRequired)
     const randomSales = (arr = []) => {
 
         let counter = 0;
@@ -48,7 +49,7 @@ const AlgoBoard = (props) => {
 
     return cloned
   }
-  const bubbleSort = (input = []) => {
+  const bubbleSort = async (input = []) => {
     // Edge case
     if(!Array.isArray(input)) return input;
     const timeStarted = Date.now()
@@ -66,13 +67,14 @@ const AlgoBoard = (props) => {
           // increment the sort counter one
           //  setsortTimes(sortTimes+1)
         }
+        setTimeout(setData(input),i*1000)
         setsortTimes(sortTimes+1)
       }
     }
     const timeEnded = Date.now()
     const timeElapsed = (timeEnded-timeStarted)/1000
     setsortTimes(sortTimes+1)
-    setDataRequired(true)
+    // setDataRequired(true)
     setTime(`${timeElapsed} s`)
     return
   }
@@ -101,7 +103,7 @@ const AlgoBoard = (props) => {
       const timeEnded = Date.now()
       const timeElapsed = (timeEnded-timeStarted)/1000
       setsortTimes(sortTimes+1)
-      setDataRequired(true)
+      // setDataRequired(true)
       setTime(`${timeElapsed} s`)
       return
     }
@@ -133,7 +135,7 @@ const AlgoBoard = (props) => {
     const timeEnded = Date.now()
     const timeElapsed = (timeEnded-timeStarted)/1000
     setsortTimes(sortTimes+1)
-    setDataRequired(true)
+    // setDataRequired(true)
     setTime(`${timeElapsed} s`)
     return output
   }
@@ -150,7 +152,7 @@ const AlgoBoard = (props) => {
       const midIndex = Math.floor(input.length/2)
       const left = input.slice(0, midIndex), right = input.slice(midIndex, input.length)
       setsortTimes(sortTimes+1)
-      setDataRequired(true);
+      // setDataRequired(true);
       return merge(mergeSort(left),mergeSort(right))
     }
       
@@ -172,11 +174,11 @@ const AlgoBoard = (props) => {
           }
         }
       }
-      setDataRequired(true);
+      // setDataRequired(true);
       const timeEnded = Date.now()
       const timeElapsed = (timeEnded-timeStarted)/1000
       setsortTimes(sortTimes+1)
-      setDataRequired(true)
+      // setDataRequired(true)
       setTime(`${timeElapsed} s`)
       return input
     }
@@ -222,11 +224,11 @@ const AlgoBoard = (props) => {
     setsortTimes(sortTimes+1)
     return arr;
     }
-    setDataRequired(true);
+    // setDataRequired(true);
     const timeEnded = Date.now()
     const timeElapsed = (timeEnded-timeStarted)/1000
     setsortTimes(sortTimes+1)
-    setDataRequired(true)
+    // setDataRequired(true)
     setTime(`${timeElapsed} s`)
     return sorter(input)
   }
@@ -234,18 +236,22 @@ const AlgoBoard = (props) => {
   const heapSort = (input = []) => {
     const timeStarted = Date.now()
   }
+  useEffect(()=>{
+    // setDataRequired(true)
+    console.log(dataRequired)
+  },[])
   // when randomClicks state is updated
   useEffect(()=>{
     setData(randomSales())
-    setDataRequired(null)
+    // setDataRequired(null)
     setTime('')
     return(()=> {setData(randomSales())
     setsortTimes(0)})
   },[randomClicks])
   useEffect(()=>{
     setErr({message: "Please generate new data to use sort algorithms again"})
-    return(()=> { // setDataRequired(null)
-    })
+    // return(()=> { // setDataRequired(null)
+    // })
   },[dataRequired, time])
     
     /*
@@ -268,7 +274,7 @@ const AlgoBoard = (props) => {
       <input type ='button' value = 'Selection Sort' disabled = {dataRequired} onClick = {()=>{selectionSort(data)}}/>
       <input type ='button' value = 'Quick Sort' disabled = {dataRequired} onClick = {()=>{quickSort(data)}}/>
       <input type ='button' value = 'Heap Sort' disabled = {dataRequired} onClick = {()=>{heapSort(data)}}/>
-      {(randomClicks > 0) ? 
+      {(randomClicks > 0 && data) ? 
         displayComponent : 
         noDataComponent}
         {(dataRequired) ? messageComponent : console.log('data is applied!')}

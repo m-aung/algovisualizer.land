@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Switch, Route, NavLink} from 'react-router-dom';
+import { Switch, Route, NavLink, BrowserRouter, useRouteMatch} from 'react-router-dom';
 // import { Dropdown} from 'react-bootstrap';
 import  './App.css';
 
@@ -10,10 +10,11 @@ import SortBoard from './components/Sort-board';
 
 const App = () => {
 //   const [authLoading, setAuthLoading] = useState(true);
+// useRouteMatch()
 
   return (
     <div className="App">
-      <div className="header">
+      <div className="header ">
         {/* <Navbar bg="dark" variant="dark"> */}
         <NavLink exact activeClassName ='active' className="navbar-toggler" to ='/'>Home</NavLink>
         <NavLink activeClassName='active' to = {{pathname :'https://github.com/m-aung/algovisualizer.land.git'} }target ="blank">github</NavLink>
@@ -23,12 +24,15 @@ const App = () => {
         {/* </Navbar> */}
       </div>
         <div className="content">
+          {/* <BrowserRouter> */}
           <Switch>
             <Route exact path ='/' component = {Home} />
             <Route path ='/searching' component = {SearchBoard} />
             <Route path ='/sorting' component = {SortBoard} />
             <Route path ='/about' component = {About} />
+            {/* <Route component={Home} /> */}
           </Switch>
+          {/* </BrowserRouter> */}
         </div>
         <footer>
             <center>
