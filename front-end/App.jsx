@@ -23,7 +23,7 @@ const App = () => {
         <NavLink activeClassName='active' to ='/about'>About</NavLink>
         {/* </Navbar> */}
       </div>
-        <div className="content">
+        <div className="content" style={{display:'flex', justifyContent:'center'}}>
           {/* <BrowserRouter> */}
           <Switch>
             <Route exact path ='/' component = {Home} />
@@ -36,7 +36,7 @@ const App = () => {
         </div>
         <footer>
             <center>
-            &#169; copyright 2021 myo aung 
+            &#169; Copyright 2021 Myo Aung 
             </center>
         </footer>
     </div>
