@@ -5,7 +5,7 @@ const getMergeSort = (array) => {
   if (array.length <= 1) return array;
   // hard copy the array
   const cacheArray = array.slice();
-  console.log('cacheArray: ', cacheArray === array);
+  // console.log('cacheArray: ', cacheArray === array);
   mergeSortHelper(array, 0, array.length - 1, cacheArray, animationArray);
   return animationArray;
 };
@@ -75,12 +75,47 @@ const merge = (
   }
 };
 
-const getBubbleSort = () => {};
+const getBubbleSort = (inputArray) => {
+  // return array with pairs of indices
+  const animationArray = [];
+  const cacheArray = inputArray.slice();
+  // first loop from 0 to last element
+  for (let first = 0; first < cacheArray.length; first++) {
+    // second loop from cur element of first loop to last element
+    for (let second = first + 1; second < cacheArray.length; second++) {
+      animationArray.push([first, second]);
+      animationArray.push([first, second]);
+      animationArray.push([first, cacheArray[first]]);
+
+      if (cacheArray[first] > cacheArray[second]) {
+        // is the first element is greater than second
+        // create a variable the first element by value
+        // animationArray.push([first, second]);
+        // animationArray.push([first, second]);
+        // animationArray.push([first, cacheArray[first]]);
+        const temp = cacheArray[first];
+        // assign the first element to second one
+        cacheArray[first] = cacheArray[second];
+        // assign the second element to variable
+        cacheArray[second] = temp;
+        animationArray.push([second, second]);
+        animationArray.push([second, second]);
+        animationArray.push([second, cacheArray[second]]);
+      } else {
+        animationArray.push([first, first]);
+        animationArray.push([first, first]);
+        animationArray.push([first, cacheArray[first]]);
+      }
+    }
+  }
+  console.log('sorted data: ', cacheArray);
+  return animationArray;
+};
 
 const doBubbleSort = () => {};
 
-const test_array = [3, 2, 55, 232, 11, 354, 22, 356, 223, 0, 1];
-getMergeSort(test_array);
-// console.log(getMergeSortanimationArray(test_array));
+// const test_array = [3, 2, 55, 232, 11, 354, 22, 356, 223, 0, 1];
+// getMergeSort(test_array);
+// // console.log(getMergeSort(test_array));
 
 export { getMergeSort, getBubbleSort };

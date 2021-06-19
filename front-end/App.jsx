@@ -36,7 +36,7 @@ const App = () => {
         </div>
         <footer>
             <center>
-            &#169; Copyright 2021 Myo Aung 
+            MIT Licensed | Copyright &#169; 2021 Myo Aung. All Rights Reserved.
             </center>
         </footer>
     </div>
