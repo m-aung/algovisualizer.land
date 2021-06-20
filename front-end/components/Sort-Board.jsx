@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import BarChart from './BarChart';
 // import { sort } from 'd3';
-import {getMergeSort, getBubbleSort} from '../d3/test-sort.js'
+import {getMergeSort, getBubbleSort, getSelectionSort} from '../d3/test-sort.js'
 
 const randomNum =(min, max)=>{
   return Math.floor(Math.random()*(max-min +1)+ min)
@@ -69,26 +69,7 @@ const AlgoBoard = (props) => {
         }
         return arr;
     }
-  const deepCopyObject = (original) => {
-    let cloned, value, key
-
-    if (typeof original !== "object" || original === null) {
-      return original // Return the value if original is not an object
-    }
-
-    // Create an array or object to hold the values
-    cloned = Array.isArray(original) ? [] : {}
-
-    for (key in original) {
-      value = original[key]
-
-      // Recursively (deep) copy for nested objects, including arrays
-      cloned[key] = deepCopyObject(value)
-    }
-
-    return cloned
-  }
-
+  
   const setTransformation = (sortType, animationSpeed = TRANSFORMATION_SPEED) => {
     // run the sort Algo to get the list of array for animation
     const barsToChange = sortType(data);
@@ -174,8 +155,8 @@ const AlgoBoard = (props) => {
     <div className="App">
       <input type ='button' value = 'Bubble Sort' disabled={dataRequired} onClick = {()=>{setTransformation(getBubbleSort, 1)}}/>
       <input type ='button' value = 'Insertion Sort' disabled = {dataRequired} onClick = {()=>{alert('Under-construction')}}/>
-      <input type ='button' value = 'Merge Sort' disabled = {dataRequired} onClick = {()=>{setTransformation(getMergeSort)}}/>
-      <input type ='button' value = 'Selection Sort' disabled = {dataRequired} onClick = {()=>{alert('Under-construction')}}/>
+      <input type ='button' value = 'Merge Sort' disabled = {dataRequired} onClick = {()=>{setTransformation(getMergeSort, 1)}}/>
+      <input type ='button' value = 'Selection Sort' disabled = {dataRequired} onClick = {()=>{setTransformation(getSelectionSort)}}/>
       <input type ='button' value = 'Quick Sort' disabled = {dataRequired} onClick = {()=>{alert('Under-construction')}}/>
       <input type ='button' value = 'Heap Sort' disabled = {dataRequired} onClick = {()=>{alert('Under-construction')}}/>
       <div>

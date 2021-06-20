@@ -1,12 +1,12 @@
-const getMergeSort = (array) => {
+const getMergeSort = (input) => {
   // to store the pair to change the color in the DOM
   const animationArray = [];
   // when array has no length
-  if (array.length <= 1) return array;
+  if (input.length <= 1) return input;
   // hard copy the array
-  const cacheArray = array.slice();
+  const cacheArray = input.slice();
   // console.log('cacheArray: ', cacheArray === array);
-  mergeSortHelper(array, 0, array.length - 1, cacheArray, animationArray);
+  mergeSortHelper(input, 0, input.length - 1, cacheArray, animationArray);
   return animationArray;
 };
 
@@ -90,9 +90,6 @@ const getBubbleSort = (inputArray) => {
       if (cacheArray[first] > cacheArray[second]) {
         // is the first element is greater than second
         // create a variable the first element by value
-        // animationArray.push([first, second]);
-        // animationArray.push([first, second]);
-        // animationArray.push([first, cacheArray[first]]);
         const temp = cacheArray[first];
         // assign the first element to second one
         cacheArray[first] = cacheArray[second];
@@ -112,10 +109,68 @@ const getBubbleSort = (inputArray) => {
   return animationArray;
 };
 
-const doBubbleSort = () => {};
+const getSelectionSort = (input = []) => {
+  // find the minimum element and place it in the front using two pointers
+  const animationArray = [];
+  const cacheArray = input.slice();
+  // loop 1: from 0 -> input.length
+  for (let i = 0; i < cacheArray.length; i++) {
+    let j = i + 1;
+    let smallestNumber = cacheArray[j];
+    let indexToSwap;
+    let curElement = cacheArray[i];
+    // element to compare
+    animationArray.push([i, i]);
+    animationArray.push([i, i]);
+    animationArray.push([i, cacheArray[i]]);
+    while (j < cacheArray.length) {
+      animationArray.push([j, j]);
+      animationArray.push([j, j]);
+      animationArray.push([j, cacheArray[j]]);
+      if (smallestNumber >= cacheArray[j]) {
+        indexToSwap = j;
+        smallestNumber = Math.min(smallestNumber, cacheArray[j]);
+      }
+      j++;
+    }
+    if (smallestNumber <= curElement) {
+      cacheArray[i] = smallestNumber;
+      cacheArray[indexToSwap] = curElement;
+      // animation swaping
+      animationArray.push([i, indexToSwap]);
+      animationArray.push([i, indexToSwap]);
+      animationArray.push([i, smallestNumber]);
+    }
+  }
+  // console.log('Output : ', cacheArray);
+  return animationArray;
+};
 
-// const test_array = [3, 2, 55, 232, 11, 354, 22, 356, 223, 0, 1];
-// getMergeSort(test_array);
-// // console.log(getMergeSort(test_array));
+const test_array = [3, 2, 55, 232, 11, 354, 22, 356, 223, 0, 1];
+const result = getSelectionSort(test_array); // []
+console.log(
+  'test array:',
+  test_array.sort((a, b) => a - b)
+);
 
-export { getMergeSort, getBubbleSort };
+const deepCopyObject = (original) => {
+  let cloned, value, key;
+
+  if (typeof original !== 'object' || original === null) {
+    return original; // Return the value if original is not an object
+  }
+
+  // Create an array or object to hold the values
+  cloned = Array.isArray(original) ? [] : {};
+
+  for (key in original) {
+    value = original[key];
+
+    // Recursively (deep) copy for nested objects, including arrays
+    cloned[key] = deepCopyObject(value);
+  }
+
+  return cloned;
+};
+
+export { getMergeSort, getBubbleSort, getSelectionSort };

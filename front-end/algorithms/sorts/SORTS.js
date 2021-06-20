@@ -1,3 +1,5 @@
+// for D3 visualization
+
 const bubbleSort = async (input = []) => {
   setDataRequired(true);
 
@@ -29,45 +31,6 @@ const bubbleSort = async (input = []) => {
     const timeEnded = Date.now();
     const timeElapsed = timeEnded - timeStarted;
     setData(output);
-    setTime(`${timeElapsed} milliseconds`);
-  } else {
-    // first loop from 0 to last element
-    for (let first = 0; first < output.length; first++) {
-      // second loop from cur element of first loop to last element
-      for (let second = first + 1; second < output.length; second++) {
-        if (output[first]['sales'] > output[second]['sales']) {
-          // is the first element is greater than second
-          // create a variable the first element by value
-          const temp = output[first];
-          // assign the first element to second one
-          output[first] = output[second];
-          // assign the second element to variable
-          output[second] = temp;
-          // increment the sort counter one
-          setsortTimes(counter);
-          setTimeout(() => {
-            setData(output);
-            setsortTimes(counter);
-          }, second * 10);
-          // console.log('counter from inner loop: ', counter)
-          // console.log('sortTime from inner loop: ', sortTimes)
-        }
-        counter++;
-      }
-      counter++;
-      setTimeout(() => {
-        setData(output);
-        setsortTimes(counter);
-      }, first * 10);
-      console.log('sortTime from outer loop: ', sortTimes);
-    }
-    console.log('counter end of the loop: ', counter);
-    // console.log('sortTimes from end of the loop: ', sortTimes)
-    const timeEnded = Date.now();
-    const timeElapsed = timeEnded - timeStarted;
-    // setsortTimes(sortTimes+1)
-    setData(output);
-    console.log('output:', input);
     setTime(`${timeElapsed} milliseconds`);
   }
   return;
@@ -239,78 +202,3 @@ const quickSort = (input = []) => {
   setTime(`${timeElapsed} milliseconds`);
   return sorter(output);
 };
-
-// console.log(mergeSort([5, 3, 51, 2, 0, 15, 22]));
-
-/* -------------------------------------------------------------------------- */
-/*                               from algoExpert                              */
-/* -------------------------------------------------------------------------- */
-// function mergeSortHelper(
-//   mainArray,
-//   startIdx,
-//   endIdx,
-//   auxiliaryArray,
-//   animations,
-// ) {
-//   if (startIdx === endIdx) return;
-//   const middleIdx = Math.floor((startIdx + endIdx) / 2);
-//   mergeSortHelper(auxiliaryArray, startIdx, middleIdx, mainArray, animations);
-//   mergeSortHelper(auxiliaryArray, middleIdx + 1, endIdx, mainArray, animations);
-//   doMerge(mainArray, startIdx, middleIdx, endIdx, auxiliaryArray, animations);
-// }
-
-// function doMerge(
-//   mainArray,
-//   startIdx,
-//   middleIdx,
-//   endIdx,
-//   auxiliaryArray,
-//   animations,
-// ) {
-//   let k = startIdx;
-//   let i = startIdx;
-//   let j = middleIdx + 1;
-//   while (i <= middleIdx && j <= endIdx) {
-//     // These are the values that we're comparing; we push them once
-//     // to change their color.
-//     animations.push([i, j]);
-//     // These are the values that we're comparing; we push them a second
-//     // time to revert their color.
-//     animations.push([i, j]);
-//     if (auxiliaryArray[i] <= auxiliaryArray[j]) {
-//       // We overwrite the value at index k in the original array with the
-//       // value at index i in the auxiliary array.
-//       animations.push([k, auxiliaryArray[i]]);
-//       mainArray[k++] = auxiliaryArray[i++];
-//     } else {
-//       // We overwrite the value at index k in the original array with the
-//       // value at index j in the auxiliary array.
-//       animations.push([k, auxiliaryArray[j]]);
-//       mainArray[k++] = auxiliaryArray[j++];
-//     }
-//   }
-//   while (i <= middleIdx) {
-//     // These are the values that we're comparing; we push them once
-//     // to change their color.
-//     animations.push([i, i]);
-//     // These are the values that we're comparing; we push them a second
-//     // time to revert their color.
-//     animations.push([i, i]);
-//     // We overwrite the value at index k in the original array with the
-//     // value at index i in the auxiliary array.
-//     animations.push([k, auxiliaryArray[i]]);
-//     mainArray[k++] = auxiliaryArray[i++];
-//   }
-//   while (j <= endIdx) {
-//     // These are the values that we're comparing; we push them once
-//     // to change their color.
-//     animations.push([j, j]);
-//     // These are the values that we're comparing; we push them a second
-//     // time to revert their color.
-//     animations.push([j, j]);
-//     // We overwrite the value at index k in the original array with the
-//     // value at index j in the auxiliary array.
-//     animations.push([k, auxiliaryArray[j]]);
-//     mainArray[k++] = auxiliaryArray[j++];
-//   }
-// }
