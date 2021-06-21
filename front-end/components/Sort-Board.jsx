@@ -1,7 +1,8 @@
-import React, {useState, useEffect, useReducer} from 'react';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
 import BarChart from './BarChart';
 // import { sort } from 'd3';
 import {getMergeSort, getBubbleSort, getSelectionSort, getInsertionSort} from '../d3/test-sort.js'
+import { sort } from 'd3';
 
 const randomNum =(min, max)=>{
   return Math.floor(Math.random()*(max-min +1)+ min)
@@ -9,12 +10,13 @@ const randomNum =(min, max)=>{
 
 const AlgoBoard = (props) => {
   // let sortCounter = 0
-  let [windowWidth, setWindowWidth] = useState(window.innerWidth)
-  let DATA_SIZE = 55
+  // const [screenSize, setScreenSize] = useState([0,0])
+  let DATA_SIZE = window.innerWidth/14 // window.innerWidth < 700 ? window.innerWidth/14 :55
   const useD3 = false
   const PRIMARY_BAR_COLOR = 'steelblue';
   const COLOR_UPDATED_BAR = 'red';
-  const TRANSFORMATION_SPEED = 10
+  const TRANSFORMATION_SPEED = 10;
+
   let [state,setState] = useState({data:null, body_width:document.body.clientWidth})
   let [data,setData] = useState([]) // data for d3
   // let [sortData, setSortData] = useState([])
@@ -47,7 +49,8 @@ const AlgoBoard = (props) => {
   let messageComponent = <div id="message">{time}<br/>{err.message}</div> 
 
   // randomize the data
-    const randomSales = (arr = [], arrSize = DATA_SIZE) => {
+    const getRandomData = (arrSize = DATA_SIZE) => {
+        const arr = [];
         let counter = 0;
         if(useD3){
           while(counter < arrSize){
@@ -120,20 +123,13 @@ const AlgoBoard = (props) => {
 
   // when randomClicks state is updated
   useEffect(()=>{
-    // console.log('screenWidth:', screenWidth)
-    // if(dataRequired){
-    //   setData(randomSales(data,screenWidth))
-    // }
-    
+    DATA_SIZE=Math.floor(window.innerWidth/14)
+    console.log('data size:',DATA_SIZE)
     setTime('')
   },[randomClicks])
   useEffect(()=>{
-    DATA_SIZE=Math.floor((windowWidth/4)/8)
-  },[windowWidth])
-  useEffect(()=>{
     setErr({message: "Please generate new data to use sort algorithms again"})
   },[dataRequired, time])
-
   // useEffect(()=> {
   //   if(sortTimes > 0){
   //     setInterval(()=>{
@@ -153,13 +149,31 @@ const AlgoBoard = (props) => {
     */
   return (
     <div className="App">
-      <input type ='button' value = 'Bubble Sort' disabled={dataRequired} onClick = {()=>{setTransformation(getBubbleSort, 4)}}/>
-      <input type ='button' value = 'Insertion Sort' disabled = {dataRequired} onClick = {()=>{setTransformation(getInsertionSort, 30)}}/>
-      <input type ='button' value = 'Merge Sort' disabled = {dataRequired} onClick = {()=>{setTransformation(getMergeSort, 10)}}/>
-      <input type ='button' value = 'Selection Sort' disabled = {dataRequired} onClick = {()=>{setTransformation(getSelectionSort, 8)}}/>
-      <input type ='button' value = 'Quick Sort' disabled = {dataRequired} onClick = {()=>{alert('Under-construction')}}/>
-      <input type ='button' value = 'Heap Sort' disabled = {dataRequired} onClick = {()=>{alert('Under-construction')}}/>
-      <div>
+      <input type ='button' value = 'Bubble Sort' disabled={dataRequired} onClick = {()=>{
+        setDataRequired(true)
+        setTransformation(getBubbleSort, 4)
+        }}/>
+      <input type ='button' value = 'Insertion Sort' disabled = {dataRequired} onClick = {()=>{
+        setDataRequired(true)
+        setTransformation(getInsertionSort, 30)
+        }}/>
+      <input type ='button' value = 'Merge Sort' disabled = {dataRequired} onClick = {()=>{
+        setDataRequired(true)
+        setTransformation(getMergeSort, 10)
+        }}/>
+      <input type ='button' value = 'Selection Sort' disabled = {dataRequired} onClick = {()=>{
+        setDataRequired(true)
+        setTransformation(getSelectionSort, 8)
+        }}/>
+      <input type ='button' value = 'Quick Sort' disabled = {dataRequired} onClick = {()=>{
+        setDataRequired(true)
+        alert('Under-construction')
+        }}/>
+      <input type ='button' value = 'Heap Sort' disabled = {dataRequired} onClick = {()=>{
+        setDataRequired(true)
+        alert('Under-construction')
+        }}/>
+      <div style={{margin: '0 15px'}}>
       {(randomClicks > 0 && data) ? 
         displayComponent : 
         noDataComponent}
@@ -168,8 +182,9 @@ const AlgoBoard = (props) => {
       <input type ='button' value = 'New Random Data' onClick ={(e)=> {
         e.preventDefault()
         setDataRequired(false)
-        setData(randomSales())
+        setData(getRandomData(DATA_SIZE))
         setRandomClicks(randomClicks+1)
+        console.log('window size:', window.innerWidth)
       }
       }/>
         <div className = 'algo'>
