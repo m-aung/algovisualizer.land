@@ -1,3 +1,23 @@
+const deepCopyObject = (original) => {
+  let cloned, value, key;
+
+  if (typeof original !== 'object' || original === null) {
+    return original; // Return the value if original is not an object
+  }
+
+  // Create an array or object to hold the values
+  cloned = Array.isArray(original) ? [] : {};
+
+  for (key in original) {
+    value = original[key];
+
+    // Recursively (deep) copy for nested objects, including arrays
+    cloned[key] = deepCopyObject(value);
+  }
+
+  return cloned;
+};
+
 const getMergeSort = (input) => {
   // to store the pair to change the color in the DOM
   const animationArray = [];
@@ -41,12 +61,12 @@ const merge = (
       // We overwrite the value at index k in the original array with the
       // value at index i in the auxiliary array.
       animationArray.push([k, cacheArray[i]]);
-      dataArray[k++] = cacheArray[i++];
+      dataArray[k++] = cacheArray[i++]; // increasing k and j inplace
     } else {
       // We overwrite the value at index k in the original array with the
       // value at index j in the auxiliary array.
       animationArray.push([k, cacheArray[j]]);
-      dataArray[k++] = cacheArray[j++];
+      dataArray[k++] = cacheArray[j++]; // increasing k and j inplace
     }
   }
   while (i <= middleIdx) {
@@ -59,7 +79,7 @@ const merge = (
     // We overwrite the value at index k in the original array with the
     // value at index i in the auxiliary array.
     animationArray.push([k, cacheArray[i]]);
-    dataArray[k++] = cacheArray[i++];
+    dataArray[k++] = cacheArray[i++]; // increasing k and i inplace
   }
   while (j <= end) {
     // These are the values that we're comparing; we push them once
@@ -71,7 +91,7 @@ const merge = (
     // We overwrite the value at index k in the original array with the
     // value at index j in the auxiliary array.
     animationArray.push([k, cacheArray[j]]);
-    dataArray[k++] = cacheArray[j++];
+    dataArray[k++] = cacheArray[j++]; // increasing k and j inplace
   }
 };
 
@@ -146,31 +166,48 @@ const getSelectionSort = (input = []) => {
   return animationArray;
 };
 
+const getInsertionSort = (input = []) => {
+  const animationArray = [];
+
+  if (!Array.isArray(input)) return input;
+
+  const cacheArray = deepCopyObject(input);
+  for (let i = 1; i < cacheArray.length; i++) {
+    let curNum = cacheArray[i]; // 2
+    let prevIndex = i - 1; // 0
+    animationArray.push([i, i]);
+    animationArray.push([i, i]);
+    animationArray.push([i, curNum]);
+    while (prevIndex >= 0 && cacheArray[prevIndex] > curNum) {
+      animationArray.push([prevIndex, prevIndex]);
+      animationArray.push([prevIndex, prevIndex]);
+      animationArray.push([prevIndex, cacheArray[prevIndex]]);
+      cacheArray[prevIndex + 1] = cacheArray[prevIndex];
+      animationArray.push([prevIndex + 1, prevIndex + 1]);
+      animationArray.push([prevIndex + 1, prevIndex + 1]);
+      animationArray.push([prevIndex + 1, cacheArray[prevIndex + 1]]);
+      prevIndex = prevIndex - 1;
+    }
+    cacheArray[prevIndex + 1] = curNum;
+    animationArray.push([prevIndex + 1, prevIndex + 1]);
+    animationArray.push([prevIndex + 1, prevIndex + 1]);
+    animationArray.push([prevIndex + 1, cacheArray[prevIndex + 1]]);
+  }
+
+  console.log('Result from Insertion Sort: ', cacheArray);
+  return animationArray;
+};
+
 const test_array = [3, 2, 55, 232, 11, 354, 22, 356, 223, 0, 1];
-const result = getSelectionSort(test_array); // []
+console.log('input Array: ', test_array);
+const result = getInsertionSort(test_array); // []
 console.log(
   'test array:',
   test_array.sort((a, b) => a - b)
 );
+// let index = 3;
+// console.log('origin: ', index);
+// console.log('3rd element of the array: ', test_array[index++]);
+// console.log('after using index++: ', index);
 
-const deepCopyObject = (original) => {
-  let cloned, value, key;
-
-  if (typeof original !== 'object' || original === null) {
-    return original; // Return the value if original is not an object
-  }
-
-  // Create an array or object to hold the values
-  cloned = Array.isArray(original) ? [] : {};
-
-  for (key in original) {
-    value = original[key];
-
-    // Recursively (deep) copy for nested objects, including arrays
-    cloned[key] = deepCopyObject(value);
-  }
-
-  return cloned;
-};
-
-export { getMergeSort, getBubbleSort, getSelectionSort };
+export { getMergeSort, getBubbleSort, getSelectionSort, getInsertionSort };

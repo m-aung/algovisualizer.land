@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import BarChart from './BarChart';
 // import { sort } from 'd3';
-import {getMergeSort, getBubbleSort, getSelectionSort} from '../d3/test-sort.js'
+import {getMergeSort, getBubbleSort, getSelectionSort, getInsertionSort} from '../d3/test-sort.js'
 
 const randomNum =(min, max)=>{
   return Math.floor(Math.random()*(max-min +1)+ min)
@@ -153,10 +153,10 @@ const AlgoBoard = (props) => {
     */
   return (
     <div className="App">
-      <input type ='button' value = 'Bubble Sort' disabled={dataRequired} onClick = {()=>{setTransformation(getBubbleSort, 1)}}/>
-      <input type ='button' value = 'Insertion Sort' disabled = {dataRequired} onClick = {()=>{alert('Under-construction')}}/>
-      <input type ='button' value = 'Merge Sort' disabled = {dataRequired} onClick = {()=>{setTransformation(getMergeSort, 1)}}/>
-      <input type ='button' value = 'Selection Sort' disabled = {dataRequired} onClick = {()=>{setTransformation(getSelectionSort)}}/>
+      <input type ='button' value = 'Bubble Sort' disabled={dataRequired} onClick = {()=>{setTransformation(getBubbleSort, 4)}}/>
+      <input type ='button' value = 'Insertion Sort' disabled = {dataRequired} onClick = {()=>{setTransformation(getInsertionSort, 30)}}/>
+      <input type ='button' value = 'Merge Sort' disabled = {dataRequired} onClick = {()=>{setTransformation(getMergeSort, 10)}}/>
+      <input type ='button' value = 'Selection Sort' disabled = {dataRequired} onClick = {()=>{setTransformation(getSelectionSort, 8)}}/>
       <input type ='button' value = 'Quick Sort' disabled = {dataRequired} onClick = {()=>{alert('Under-construction')}}/>
       <input type ='button' value = 'Heap Sort' disabled = {dataRequired} onClick = {()=>{alert('Under-construction')}}/>
       <div>
