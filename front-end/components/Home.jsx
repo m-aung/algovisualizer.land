@@ -4,9 +4,9 @@ import {Link} from 'react-router-dom'
 const Home = () => {
     return (
         <div>
-            <section className='title-head' >
+            {/* <section className='title-head' >
                 <strong >Welcome to Algo-Visualizer 2021</strong>
-            </section>
+            </section> */}
             <section className="algo-nav-main" id='top'>
                 <ul className="algo-nav-main">
                     <li>
