@@ -1,3 +1,9 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root {
   --ff-primary: 'Source Sans Pro', sans-serif;
   --ff-secondary: 'Source Code Pro', monospace;
@@ -8,6 +14,7 @@
   --clr-light: #fff;
   --clr-dark: #303030;
   --clr-accent: #1685e0;
+  --clr-delight: #1cc872;
 
   --fs-h1: 3rem;
   --fs-h2: 2.25rem;
@@ -17,6 +24,18 @@
   --bs: 0.25em 0.25em 0.75em rgba(0, 0, 0, 0.35),
     0.125em 0.125em 0.25em rgba(0, 0, 0, 0.15);
 }
+@media (min-width: 800px) {
+  :root {
+    --fs-h1: 4.5rem;
+    --fs-h2: 3.75rem;
+    --fs-h3: 1.5rem;
+    --fs-body: 1.25rem;
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
+
 a,
 a:visited {
   text-decoration: none;
@@ -36,62 +55,120 @@ header {
   padding-top: 0.5em;
   padding-bottom: 0.5em;
 }
-.header {
-  display: flex;
-  justify-content: space-between;
-  padding: 1em;
-  /* padding: 10px; */
+.nav {
+  float: left;
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  display: block;
+  /* justify-content: space-between; */
+  padding: 0.5em;
   background: #edf2f4;
   border-bottom: 1px solid #9999;
 }
 .title {
   color: darkcyan;
   text-decoration: none;
-  margin-top: 5px;
+  margin-top: 2.5em;
+}
+.title-head {
+  background-color: var(--clr-accent);
+  color: var(--clr-light);
+  display: block;
+  text-align: center;
+  position: relative;
+  margin-top: 1.125em;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-h2);
+  overflow: hidden;
+  z-index: -2;
 }
 .algo-list {
-  grid-area: 'nav';
   left: 1em;
   height: 100%;
-  list-style: none;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  list-style: none;
   align-items: left;
   margin: 0 1em;
   padding: 0;
 }
 .algo-link {
   color: inherit;
-  /* font-weight: var(--fw-bold);
-  font-size: var(--fs-h2); */
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-h3);
   text-decoration: none;
   cursor: pointer;
 }
-.header a {
+.nav a,
+.nav-button {
+  font-family: var(--ff-secondary);
   color: #0072ff;
   text-decoration: none;
   margin-left: 20px;
   margin-right: 5px;
+  cursor: pointer;
 }
-.header a:hover {
+.nav a:hover {
   color: #8a0f53;
 }
-
-.header small {
+.nav a label {
+  cursor: pointer;
+}
+.nav small {
   color: #666;
   visibility: initial;
 }
-.header .active {
+.nav .active {
   color: #2c7613;
+}
+.nav-toggle {
+  transition: none;
+  padding: 0.25rem 0.75rem;
+  font-size: 1em;
+  line-height: 1;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  transition: box-shadow 0.15s ease-in-out;
+}
+.nav-toggle-collapse {
+  display: none;
+  transition: none;
+  padding: 0.25rem 0.75rem;
+  font-size: 1em;
+  text-decoration: none;
+  list-style: none;
+  line-height: 1;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  transition: box-shadow 0.15s ease-in-out;
+  z-index: 2;
+}
+.show {
+  display: flex !important;
+  flex-basis: auto;
+}
+.nav-toggle:focus {
+  text-decoration: none;
+  /* outline: 0;
+  box-shadow: 0 0 0 0.25rem; */
+}
+.nav-toggle:focus {
+  text-decoration: none;
+  /* outline: 0;
+  box-shadow: 0 0 0 0.25rem; */
 }
 .error {
   color: red;
   margin-bottom: 10px;
 }
 footer {
-  position: fixed;
   bottom: 0;
+  text-align: center;
+  margin-bottom: 0;
   width: 100%;
 }
 .about-article {
@@ -114,24 +191,58 @@ footer {
   text-decoration: none;
 }
 
-.algo-title {
+.algo-nav,
+.algo-nav-main {
+  font-size: var(--fs-h2);
+  color: #98a2b4;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0;
+}
+.algo-nav {
+  height: 25%;
+  background-color: var(--clr-accent);
+  color: var(--clr-light);
+}
+.algo-nav-main {
+  text-align: center;
+  padding-top: 3em;
+  height: 35%;
+  background-color: var(--clr-light);
+  color: var(--clr-accent);
+}
+
+.algo-title,
+.algo-detail-head {
   text-align: left;
-  margin-left: 1em;
+  font-size: var(--fs-h3);
   font-weight: var(--fw-bold);
 }
 .algo-detail {
-  /* max-width: 1000px; */
-  display: grid;
-  grid-template-columns:
-    'img img context'
-    'img img context';
+  height: 100%;
   margin-left: 1em;
-  margin-right: 1em;
-  padding-left: 3em;
+}
+.algo-detail-head {
+  padding-top: 1.75em;
+}
+.algo-detail-link {
+  margin: 0 auto;
+}
+.algo-subtitle {
+  text-align: left;
+  font-size: var(--fs-h4);
+  font-weight: var(--fw-bold);
 }
 .algo-body {
   /* display: grid; */
-  position: relative;
+  /* position: relative; */
   grid-area: context;
   padding-right: 3em;
+}
+
+.context-body {
+  margin-top: 4em;
 }
