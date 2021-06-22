@@ -2,7 +2,7 @@ import React from 'react';
 const About = () => {
     return (
         <div className="title">
-            <header><strong>Algo-Visualizer 2021</strong></header>
+            <header className="title-head"><strong>Algo-Visualizer 2021</strong></header>
             <article className= 'about-article'>
                 This App is about the visualizing of the most popular Sorting and Searching algorithms.
                 Constantly maintaining and updating by Myo Aung 
@@ -15,6 +15,9 @@ const About = () => {
                 He devloped <strong>APIs</strong> for developers such as <a href="https://dorm.land" target="_blank">dorm</a> ,<a href="https://react-authentication-boilerplate-v1.netlify.app/" target="_blank"> React Login Boiler plate</a> and Single Page Applications. <br/>
                 Please visit <a href="https://m-aung.github.io/myoaung.com/" target="_blank">here</a> to check our his Portfolio
             </article>
+            <footer>
+                MIT Licensed | Copyright &#169; 2021 Myo Aung. All Rights Reserved.
+            </footer>
         </div>
     )
 }

@@ -17,7 +17,7 @@ const AlgoBoard = (props) => {
   const COLOR_UPDATED_BAR = 'red';
   const TRANSFORMATION_SPEED = 10;
 
-  let [state,setState] = useState({data:null, body_width:document.body.clientWidth})
+  let [resetData, setResetData] = useState(false)
   let [data,setData] = useState([]) // data for d3
   // let [sortData, setSortData] = useState([])
   let [randomClicks,setRandomClicks] = useState(0) // randomClicks count
@@ -95,7 +95,13 @@ const AlgoBoard = (props) => {
           styleForBar1.backgroundColor = color;
           styleForBar2.backgroundColor = color;
         }, i * animationSpeed);
-      } else {
+      } 
+      else if(i === barsToChange.length-1){
+        setTimeout(() => {
+          setResetData(false)
+        }, i * animationSpeed);
+      }
+      else {
         setTimeout(() => {
           // updated data for third of the pair
           const [index1, newHeight] = barsToChange[i];
@@ -129,7 +135,7 @@ const AlgoBoard = (props) => {
   },[randomClicks])
   useEffect(()=>{
     setErr({message: "Please generate new data to use sort algorithms again"})
-  },[dataRequired, time])
+  },[dataRequired])
   // useEffect(()=> {
   //   if(sortTimes > 0){
   //     setInterval(()=>{
@@ -148,28 +154,34 @@ const AlgoBoard = (props) => {
     need the data to be presistent 
     */
   return (
-    <div className="App">
+    <div className="context-body">
       <input type ='button' value = 'Bubble Sort' disabled={dataRequired} onClick = {()=>{
+        setResetData(true)
         setDataRequired(true)
         setTransformation(getBubbleSort, 4)
         }}/>
       <input type ='button' value = 'Insertion Sort' disabled = {dataRequired} onClick = {()=>{
+        setResetData(true)
         setDataRequired(true)
         setTransformation(getInsertionSort, 30)
         }}/>
       <input type ='button' value = 'Merge Sort' disabled = {dataRequired} onClick = {()=>{
+        setResetData(true)
         setDataRequired(true)
         setTransformation(getMergeSort, 10)
         }}/>
       <input type ='button' value = 'Selection Sort' disabled = {dataRequired} onClick = {()=>{
+        setResetData(true)
         setDataRequired(true)
         setTransformation(getSelectionSort, 8)
         }}/>
       <input type ='button' value = 'Quick Sort' disabled = {dataRequired} onClick = {()=>{
+        setResetData(true)
         setDataRequired(true)
         alert('Under-construction')
         }}/>
       <input type ='button' value = 'Heap Sort' disabled = {dataRequired} onClick = {()=>{
+        setResetData(true)
         setDataRequired(true)
         alert('Under-construction')
         }}/>
@@ -177,14 +189,14 @@ const AlgoBoard = (props) => {
       {(randomClicks > 0 && data) ? 
         displayComponent : 
         noDataComponent}
-        {(dataRequired) ? messageComponent : console.log('data: ', data)}
+        {(!resetData) ? messageComponent : ''}
         </div>
-      <input type ='button' value = 'New Random Data' onClick ={(e)=> {
+      <input type ='button' value = 'New Random Data' disabled = {resetData} onClick ={(e)=> {
         e.preventDefault()
         setDataRequired(false)
+        setResetData(true)
         setData(getRandomData(DATA_SIZE))
         setRandomClicks(randomClicks+1)
-        console.log('window size:', window.innerWidth)
       }
       }/>
         <div className = 'algo'>

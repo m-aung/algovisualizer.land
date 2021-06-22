@@ -209,5 +209,6 @@ console.log(
 // console.log('origin: ', index);
 // console.log('3rd element of the array: ', test_array[index++]);
 // console.log('after using index++: ', index);
+//{\displaystyle \alpha =-1+\sum _{k=0}^{\infty }{\frac {1}{2^{k}+1}}\approx 0.2645.}\alpha =-1+\sum _{k=0}^{\infty }{\frac {1}{2^{k}+1}}\approx 0.2645.
 
 export { getMergeSort, getBubbleSort, getSelectionSort, getInsertionSort };

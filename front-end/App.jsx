@@ -11,16 +11,25 @@ import SortBoard from './components/Sort-board';
 const App = () => {
 //   const [authLoading, setAuthLoading] = useState(true);
 // useRouteMatch()
+  const [navMenu, setNavMenu] = useState('')
+const toggleMenu = () => {
+  return navMenu === '' ? setNavMenu('show') : setNavMenu('')
+}
 
   return (
     <div className="App">
-      <div className="header ">
+      <div className="nav">
         {/* <Navbar bg="dark" variant="dark"> */}
-        <NavLink exact activeClassName ='active' className="navbar-toggler" to ='/home'><i className="fas fa-arrow-circle-left"></i></NavLink>
+        <NavLink exact activeClassName ='active' className="nav-toggle" to ='/home'><i className="fas fa-arrow-circle-left"></i></NavLink>
         <NavLink activeClassName='active' to = {{pathname :'https://github.com/m-aung/algovisualizer.land.git'} }target ="_blank"><i className="fab fa-github"></i></NavLink>
-        <NavLink exact activeClassName ='active' to ='/sorting'>Sorting-Game</NavLink>
-        <NavLink exact activeClassName ='active' to ='/searching'>Searching-Game</NavLink>
-        <NavLink activeClassName='active' to ='/about'>About</NavLink>
+        <NavLink activeClassName='active' to ='/about' aria-label='about'><i className="fas fa-braille"></i></NavLink>
+        <button className="nav-toggle nav-button" type="button" onClick={ toggleMenu } data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i className="fas fa-gamepad"></i>
+    </button>
+        <ul className={`nav-toggle-collapse ${navMenu}`} id="navbarSupportedContent">
+          <li><NavLink exact activeClassName ='active' to ='/sorting' onClick={toggleMenu}>Sorting-Game</NavLink></li>
+          <li><NavLink exact activeClassName ='active' to ='/searching'onClick={toggleMenu} >Searching-Game</NavLink></li>
+        </ul>  
         {/* </Navbar> */}
       </div>
         <div className="content" style={{display:'flex', justifyContent:'center'}}>
@@ -34,11 +43,6 @@ const App = () => {
           </Switch>
           {/* </BrowserRouter> */}
         </div>
-        <footer>
-            <center>
-            MIT Licensed | Copyright &#169; 2021 Myo Aung. All Rights Reserved.
-            </center>
-        </footer>
     </div>
   );
 }
