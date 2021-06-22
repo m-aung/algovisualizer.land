@@ -77,7 +77,7 @@ header {
   display: block;
   text-align: center;
   position: relative;
-  margin-top: 1.125em;
+  margin-top: 0.65em;
   font-weight: var(--fw-bold);
   font-size: var(--fs-h2);
   overflow: hidden;
