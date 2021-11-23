@@ -24,6 +24,11 @@
   --bs: 0.25em 0.25em 0.75em rgba(0, 0, 0, 0.35),
     0.125em 0.125em 0.25em rgba(0, 0, 0, 0.15);
 }
+
+body{
+  margin: 0;
+  background: linear-gradient(to right, #00aaff, #ffbb00);
+}
 @media (min-width: 800px) {
   :root {
     --fs-h1: 4.5rem;
@@ -245,4 +250,24 @@ footer {
 
 .context-body {
   margin-top: 4em;
+}
+.flex-mid-nowarp-row{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.flex-mid-nowarp-col{
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+.board-container{
+  display: grid;
+  margin-top: 5rem;
+  /* grid-template-columns: repeat(4, 6rem); */
+  grid-template-rows: min;
 }

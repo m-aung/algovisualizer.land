@@ -1,15 +1,12 @@
 // for D3 visualization
 
 const bubbleSort = async (input = []) => {
-  setDataRequired(true);
 
   // Edge case
   if (!Array.isArray(input)) return input;
   const timeStarted = Date.now();
-  const output = deepCopyObject(input);
+  const output = structuredClone(input);
   let counter = 1;
-  if (!input[0]['sales']) {
-    console.log('sales is not defined');
     // first loop from 0 to last element
     for (let first = 0; first < output.length; first++) {
       // second loop from cur element of first loop to last element
@@ -28,12 +25,10 @@ const bubbleSort = async (input = []) => {
       }
       counter++;
     }
-    const timeEnded = Date.now();
-    const timeElapsed = timeEnded - timeStarted;
-    setData(output);
-    setTime(`${timeElapsed} milliseconds`);
-  }
-  return;
+    // const timeEnded = Date.now();
+    // const timeElapsed = timeEnded - timeStarted;
+    // setData(output);
+    // setTime(`${timeElapsed} milliseconds`);
 };
 
 const merge = (arr1, arr2) => {
